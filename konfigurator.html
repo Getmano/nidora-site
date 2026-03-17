@@ -2,158 +2,24 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>NIDORA | Konfigurator 3D Precyzyjny</title>
+    <title>NIDORA | Konfigurator 3D</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
     <style>
-        body, html {
-            margin: 0; padding: 0; width: 100%; height: 100%;
-            background-color: #000;
-            color: white;
-            font-family: 'Montserrat', sans-serif;
-            overflow: hidden;
-            display: flex;
-        }
-
-        /* LEWA STRONA - 3D */
-        .configurator-area {
-            flex: 2;
-            position: relative;
-            background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
-        }
-
-        #canvas-container {
-            width: 100%;
-            height: 100%;
-            cursor: grab;
-        }
-        #canvas-container:active { cursor: grabbing; }
-
-        /* PRAWA STRONA - MENU */
-        .sidebar {
-            flex: 1;
-            background-color: #0c0d10; 
-            border-left: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 40px;
-            display: flex;
-            flex-direction: column;
-            box-sizing: border-box;
-            overflow-y: auto;
-        }
-
-        .top-nav a {
-            color: rgba(255, 255, 255, 0.5);
-            text-decoration: none;
-            font-size: 0.8rem;
-            letter-spacing: 0.2rem;
-            text-transform: uppercase;
-            margin-bottom: 40px;
-            display: inline-block;
-            transition: 0.3s;
-        }
-        .top-nav a:hover { color: white; }
-
-        .sidebar h2 {
-            font-weight: 200;
-            letter-spacing: 0.3rem;
-            font-size: 1.5rem;
-            margin-top: 0;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-        }
-
-        .model-card {
-            background: rgba(255, 255, 255, 0.03); 
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 20px;
-            margin-bottom: 15px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .model-card:hover, .model-card.active {
-            border-color: rgba(255, 255, 255, 0.8);
-            background: rgba(255, 255, 255, 0.07);
-        }
-
-        .model-card h3 {
-            margin: 0 0 5px 0;
-            font-weight: 400;
-            font-size: 1rem;
-            letter-spacing: 0.1rem;
-            color: white;
-        }
-
-        .model-card p {
-            margin: 0;
-            font-size: 0.8rem;
-            color: rgba(255, 255, 255, 0.6);
-            font-weight: 300;
-        }
-
-        /* Sekcja wgrywania i kadrowania */
-        .customization-section {
-            margin-top: 20px;
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .action-btn {
-            background: transparent;
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            padding: 15px 20px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 300;
-            letter-spacing: 0.1rem;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: 0.3s;
-            width: 100%;
-            display: block;
-            text-align: center;
-            box-sizing: border-box;
-        }
-
-        .action-btn:hover {
-            background: white;
-            color: black;
-        }
-
-        .action-btn.primary {
-            background: white;
-            color: black;
-            margin-top: 15px;
-            font-weight: 400;
-        }
-        
-        .action-btn.primary:hover {
-            background: #eee;
-        }
-
-        #photo-input { display: none; }
-
-        /* Edytor zdjęć */
-        #cropper-container {
-            display: none;
-            margin-top: 20px;
-        }
-
-        .img-container {
-            width: 100%;
-            max-height: 300px;
-            background-color: #222; 
-            margin-bottom: 15px;
-        }
-
-        .img-container img {
-            max-width: 100%;
-        }
-
-        .cropper-view-box,
-        .cropper-face {
-            border-radius: 50%;
-        }
+        body, html { margin: 0; padding: 0; width: 100%; height: 100%; background-color: #000; color: white; font-family: 'Montserrat', sans-serif; overflow: hidden; display: flex; }
+        .configurator-area { flex: 2; position: relative; background: #000; }
+        #canvas-container { width: 100%; height: 100%; cursor: grab; }
+        .sidebar { flex: 1; background-color: #0c0d10; border-left: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; overflow-y: auto; box-sizing: border-box; }
+        .top-nav a { color: rgba(255, 255, 255, 0.5); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.2rem; text-transform: uppercase; margin-bottom: 40px; display: inline-block; }
+        h2 { font-weight: 200; letter-spacing: 0.3rem; font-size: 1.5rem; margin-top: 0; margin-bottom: 20px; text-transform: uppercase; }
+        .model-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 20px; margin-bottom: 15px; cursor: pointer; }
+        .model-card.active { border-color: white; background: rgba(255, 255, 255, 0.1); }
+        .action-btn { background: transparent; color: white; border: 1px solid white; padding: 15px; width: 100%; cursor: pointer; font-family: 'Montserrat'; text-transform: uppercase; letter-spacing: 0.1rem; margin-top: 10px; transition: 0.3s; }
+        .action-btn:hover { background: white; color: black; }
+        .action-btn.primary { background: white; color: black; font-weight: 400; }
+        #cropper-container { display: none; margin-top: 20px; }
+        .img-container { width: 100%; max-height: 300px; background: #222; margin-bottom: 15px; }
+        .cropper-view-box, .cropper-face { border-radius: 50%; }
     </style>
 </head>
 <body>
@@ -163,28 +29,20 @@
     </div>
 
     <div class="sidebar">
-        <div class="top-nav">
-            <a href="produkty.html">← Wróć do produktów</a>
-        </div>
-        
+        <div class="top-nav"><a href="produkty.html">← Wróć do produktów</a></div>
         <h2>1. Kształt</h2>
-        
         <div class="model-card active">
             <h3>Model Precyzyjny</h3>
             <p>Śr. 19.8mm | Drut 1.9mm</p>
         </div>
 
         <div class="customization-section">
-            <h2>2. Twoje Wspomnienie</h2>
-            
+            <h2>2. Zdjęcie</h2>
             <label for="photo-input" class="action-btn">Wybierz zdjęcie</label>
-            <input type="file" id="photo-input" accept="image/*">
+            <input type="file" id="photo-input" style="display:none" accept="image/*">
             
             <div id="cropper-container">
-                <p style="font-size: 0.8rem; margin-bottom: 10px; color: rgba(255, 255, 255, 0.6);">Przesuń i powiększ zdjęcie, aby dopasować je do okrągłego oczka:</p>
-                <div class="img-container">
-                    <img id="image-to-crop" src="">
-                </div>
+                <div class="img-container"><img id="image-to-crop"></div>
                 <button id="apply-crop" class="action-btn primary">Nałóż na pierścionek</button>
             </div>
         </div>
@@ -195,157 +53,98 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 
     <script>
-        // --- USTAWIENIA SCENY 3D ---
         const container = document.getElementById('canvas-container');
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
-        camera.position.set(0, 15, 30); 
+        camera.position.set(0, 15, 30);
 
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(container.clientWidth, container.clientHeight);
         renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.physicallyCorrectLights = true;
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
+        renderer.outputEncoding = THREE.sRGBEncoding;
         container.appendChild(renderer.domElement);
 
         const controls = new THREE.OrbitControls(camera, renderer.domElement);
-        controls.enableDamping = true; 
-        controls.dampingFactor = 0.05;
+        controls.enableDamping = true;
 
-        // ============================================================
-        // === NOWE, MOCNE OŚWIETLENIE STUDYJNE DLA SREBRA ===
-        // To te białe ściany sprawią, że pierścionek przestanie być czarny
-        // ============================================================
-        
-        // 1. Ogólne, chłodne światło otoczenia
-        const ambientLight = new THREE.AmbientLight(0xe0e0e0, 1.2);
-        scene.add(ambientLight);
+        // --- ROZWIĄZANIE PROBLEMU CZERNI: GENERATOR OTOCZENIA ---
+        const pmremGenerator = new THREE.PMREMGenerator(renderer);
+        scene.environment = pmremGenerator.fromScene(new THREE.Scene()).texture;
 
-        // 2. Główne światło z przodu
-        const keyLight = new THREE.DirectionalLight(0xffffff, 2);
-        keyLight.position.set(5, 15, 20);
-        scene.add(keyLight);
+        // ŚWIATŁA
+        const light1 = new THREE.PointLight(0xffffff, 2); light1.position.set(10, 20, 10); scene.add(light1);
+        const light2 = new THREE.PointLight(0xffffff, 1.5); light2.position.set(-10, 5, 5); scene.add(light2);
+        scene.add(new THREE.AmbientLight(0xffffff, 0.5));
 
-        // 3. Mocne światło z boku (tworzy blask na krawędzi obrączki)
-        const fillLight = new THREE.DirectionalLight(0xffffff, 1.5);
-        fillLight.position.set(-20, 10, 5);
-        scene.add(fillLight);
-        
-        // 4. Światło z góry (oświetla miseczkę)
-        const topLight = new THREE.DirectionalLight(0xffffff, 1);
-        topLight.position.set(0, 30, 0);
-        scene.add(topLight);
-
-        // Dodajemy chłodny odcień do cieni, żeby srebro wyglądało szlachetniej
-        scene.fog = new THREE.FogExp2(0x050507, 0.01);
-
-        // === MATERIAŁY (Z fizycznym połyskiem srebra) ===
+        // MATERIAŁY
         const silverMaterial = new THREE.MeshStandardMaterial({
-            color: 0xeeeeee,    // Prawie biały, chłodny kolor metalu
-            metalness: 1.0,     // 100% metalu
-            roughness: 0.12,    // Gładki, błyszczący
+            color: 0xffffff, metalness: 1, roughness: 0.05
         });
+        const photoMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
 
-        const photoMaterial = new THREE.MeshPhongMaterial({
-            color: 0xaaaaaa, specular: 0x333333, shininess: 10
-        });
-
-        // --- BUDOWA PIERŚCIONKA (Z TWOIMI MILIMETRAMI) ---
         const ringGroup = new THREE.Group();
         scene.add(ringGroup);
 
         function zbudujPierscionek() {
-            while(ringGroup.children.length > 0) ringGroup.remove(ringGroup.children[0]); 
+            while(ringGroup.children.length > 0) ringGroup.remove(ringGroup.children[0]);
+            
+            const gruboscDrutu = 0.95; 
+            const srednicaRing = 9.9;
+            const srednicaWewMiseczki = 2.05; 
+            const glebokoscMiseczki = 1.8;
 
-            // TWOJE REALNE WYMIARY (w skali modelu)
-            const gruboscDrutu = 0.95;    // połowa z 1.90 mm
-            const srednicaRing = 9.9;     // połowa z 19.80 mm
-            const srednicaWewMiseczki = 2.05; // połowa z 4.10 mm
-            const glebokoscMiseczki = 1.8; // realne 1.80 mm
-
-            // 1. OBRĄCZKA (Tor) - teraz ma 1.9mm grubości
             const ringGeo = new THREE.TorusGeometry(srednicaRing, gruboscDrutu, 64, 100);
-            const ring = new THREE.Mesh(ringGeo, silverMaterial);
-            ringGroup.add(ring);
+            ringGroup.add(new THREE.Mesh(ringGeo, silverMaterial));
 
-            // 2. MISECZKA (Korona) - precyzyjnie 1.8mm głębokości
-            // Dodajemy 0.4mm na ścianki (śr. zewnętrzna wyjdzie ok. 5mm)
             const oprawaGeo = new THREE.CylinderGeometry(srednicaWewMiseczki + 0.4, srednicaWewMiseczki + 0.3, glebokoscMiseczki, 64);
             const oprawa = new THREE.Mesh(oprawaGeo, silverMaterial);
-            // Kładziemy miseczkę na górze obrączki
-            oprawa.position.y = srednicaRing; 
+            oprawa.position.y = srednicaRing;
             ringGroup.add(oprawa);
 
-            // 3. ZDJĘCIE (Wewnątrz miseczki)
             const zdjecieGeo = new THREE.CircleGeometry(srednicaWewMiseczki, 64);
-            const zdjeciePowierzchnia = new THREE.Mesh(zdjecieGeo, photoMaterial);
-            zdjeciePowierzchnia.rotation.x = -Math.PI / 2;
-            // Osadzamy zdjęcie w głąb (na dnie miseczki o głębokości 1.8mm)
-            zdjeciePowierzchnia.position.y = oprawa.position.y + (glebokoscMiseczki / 2) - 0.1; 
-            ringGroup.add(zdjeciePowierzchnia);
-            
-            // Lekko pochylamy cały model na start
-            ringGroup.rotation.x = 0.4;
-            ringGroup.rotation.y = -0.4;
+            const zdjecie = new THREE.Mesh(zdjecieGeo, photoMaterial);
+            zdjecie.rotation.x = -Math.PI / 2;
+            zdjecie.position.y = oprawa.position.y + (glebokoscMiseczki / 2) - 0.1;
+            ringGroup.add(zdjecie);
         }
 
         zbudujPierscionek();
 
-        // --- KADROWANIE ZDJĘCIA (CROPPER.JS) ---
-        let cropper; 
-        const imageToCrop = document.getElementById('image-to-crop');
-        const cropperContainer = document.getElementById('cropper-container');
+        // --- OBSŁUGA KADROWANIA I PRZYCISKU ---
+        let cropper;
+        const input = document.getElementById('photo-input');
+        const img = document.getElementById('image-to-crop');
+        const cropContainer = document.getElementById('cropper-container');
 
-        document.getElementById('photo-input').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
+        input.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if(file) {
                 const reader = new FileReader();
-                reader.onload = function(e) {
-                    imageToCrop.src = e.target.result;
-                    cropperContainer.style.display = 'block';
-
-                    if (cropper) {
-                        cropper.destroy();
-                    }
-
-                    cropper = new Cropper(imageToCrop, {
-                        aspectRatio: 1,
-                        viewMode: 1,
-                        dragMode: 'move',
-                        guides: false,
-                        center: false,
-                        cropBoxMovable: false,
-                        cropBoxResizable: false,
-                        toggleDragModeOnDblclick: false
-                    });
+                reader.onload = (event) => {
+                    img.src = event.target.result;
+                    cropContainer.style.display = 'block';
+                    if(cropper) cropper.destroy();
+                    cropper = new Cropper(img, { aspectRatio: 1, viewMode: 1, guides: false, cropBoxMovable: false, cropBoxResizable: false });
                 };
                 reader.readAsDataURL(file);
             }
         });
 
-        document.getElementById('apply-crop').addEventListener('click', function() {
-            if (!cropper) return;
-
-            const croppedCanvas = cropper.getCroppedCanvas({
-                width: 512, 
-                height: 512
-            });
-
-            const textureLoader = new THREE.TextureLoader();
-            textureLoader.load(croppedCanvas.toDataURL(), function(texture) {
-                photoMaterial.map = texture;
-                photoMaterial.color.setHex(0xffffff); 
-                photoMaterial.needsUpdate = true;
-            });
+        // NAPRAWIONY PRZYCISK
+        document.getElementById('apply-crop').addEventListener('click', () => {
+            if(!cropper) return;
+            const canvas = cropper.getCroppedCanvas({ width: 512, height: 512 });
+            const texture = new THREE.CanvasTexture(canvas);
+            photoMaterial.map = texture;
+            photoMaterial.needsUpdate = true;
+            console.log("Zdjęcie nałożone!"); 
         });
 
-        // --- ANIMACJA ---
         function animate() {
             requestAnimationFrame(animate);
-            controls.update(); 
-            if(cropperContainer.style.display !== 'block') {
-                ringGroup.rotation.y += 0.002;
-            }
+            controls.update();
+            if(cropContainer.style.display !== 'block') ringGroup.rotation.y += 0.005;
             renderer.render(scene, camera);
         }
         animate();
