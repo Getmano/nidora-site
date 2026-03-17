@@ -6,7 +6,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
     <style>
-        /* === TWOJE STYLIZACJE WIZUALNE (Z CZARNYM TŁEM) === */
         body, html {
             margin: 0; padding: 0; width: 100%; height: 100%;
             background-color: #000;
@@ -30,7 +29,7 @@
         }
         #canvas-container:active { cursor: grabbing; }
 
-        /* PRAWA STRONA - MENU (Chłodny, ciemny odcień) */
+        /* PRAWA STRONA - MENU */
         .sidebar {
             flex: 1;
             background-color: #0c0d10; 
@@ -134,7 +133,7 @@
 
         #photo-input { display: none; }
 
-        /* Edytor zdjęć (Z Twoimi stylami) */
+        /* Edytor zdjęć */
         #cropper-container {
             display: none;
             margin-top: 20px;
@@ -205,7 +204,6 @@
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(container.clientWidth, container.clientHeight);
         renderer.setPixelRatio(window.devicePixelRatio);
-        // === POPRAWKA DLA METALU: Włączamy fizykę i tonowanie ===
         renderer.physicallyCorrectLights = true;
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
         container.appendChild(renderer.domElement);
@@ -214,24 +212,38 @@
         controls.enableDamping = true; 
         controls.dampingFactor = 0.05;
 
-        // --- OŚWIETLENIE PUNKTOWE DLA METALU ---
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+        // ============================================================
+        // === NOWE, MOCNE OŚWIETLENIE STUDYJNE DLA SREBRA ===
+        // To te białe ściany sprawią, że pierścionek przestanie być czarny
+        // ============================================================
+        
+        // 1. Ogólne, chłodne światło otoczenia
+        const ambientLight = new THREE.AmbientLight(0xe0e0e0, 1.2);
         scene.add(ambientLight);
-        const dirLight1 = new THREE.DirectionalLight(0xffffff, 1);
-        dirLight1.position.set(10, 20, 10);
-        scene.add(dirLight1);
-        const dirLight2 = new THREE.DirectionalLight(0xffffff, 0.8);
-        dirLight2.position.set(-15, 5, -15);
-        scene.add(dirLight2);
-        const dirLight3 = new THREE.DirectionalLight(0xffffff, 0.5);
-        dirLight3.position.set(0, -10, 15);
-        scene.add(dirLight3);
 
-        // --- MATERIAŁY (Z fizycznym połyskiem srebra) ---
+        // 2. Główne światło z przodu
+        const keyLight = new THREE.DirectionalLight(0xffffff, 2);
+        keyLight.position.set(5, 15, 20);
+        scene.add(keyLight);
+
+        // 3. Mocne światło z boku (tworzy blask na krawędzi obrączki)
+        const fillLight = new THREE.DirectionalLight(0xffffff, 1.5);
+        fillLight.position.set(-20, 10, 5);
+        scene.add(fillLight);
+        
+        // 4. Światło z góry (oświetla miseczkę)
+        const topLight = new THREE.DirectionalLight(0xffffff, 1);
+        topLight.position.set(0, 30, 0);
+        scene.add(topLight);
+
+        // Dodajemy chłodny odcień do cieni, żeby srebro wyglądało szlachetniej
+        scene.fog = new THREE.FogExp2(0x050507, 0.01);
+
+        // === MATERIAŁY (Z fizycznym połyskiem srebra) ===
         const silverMaterial = new THREE.MeshStandardMaterial({
-            color: 0xc0c0c0,    // Kolor czystego srebra
+            color: 0xeeeeee,    // Prawie biały, chłodny kolor metalu
             metalness: 1.0,     // 100% metalu
-            roughness: 0.1,     // Bardzo gładki, błyszczący
+            roughness: 0.12,    // Gładki, błyszczący
         });
 
         const photoMaterial = new THREE.MeshPhongMaterial({
@@ -277,7 +289,6 @@
             ringGroup.rotation.y = -0.4;
         }
 
-        // Startujemy z chudym modelem o Twoich wymiarach
         zbudujPierscionek();
 
         // --- KADROWANIE ZDJĘCIA (CROPPER.JS) ---
