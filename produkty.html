@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produkty | NIDORA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            background-color: #000;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        /* MENU NAWIGACYJNE NA GÓRZE */
+        .top-nav {
+            position: absolute;
+            top: 40px;
+            width: 100%;
+            text-align: center;
+            z-index: 20;
+        }
+
+        .top-nav a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 300;
+            letter-spacing: 0.25rem;
+            text-transform: uppercase;
+            transition: 0.3s;
+            padding: 0 15px;
+        }
+
+        .top-nav a:hover {
+            color: #fff;
+        }
+
+        .nav-separator {
+            color: rgba(255, 255, 255, 0.2);
+            font-weight: 200;
+            font-size: 0.8rem;
+        }
+
+        /* SEKCJA PRODUKTY */
+        .products-section {
+            padding: 120px 10% 50px; /* Większy padding u góry, żeby menu nie nachodziło na tekst */
+            text-align: center;
+        }
+
+        .products-section h1 {
+            font-weight: 200;
+            letter-spacing: 0.3rem;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+        }
+
+        .divider {
+            width: 80px;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.4);
+            margin: 0 auto 40px auto;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            margin-bottom: 80px;
+        }
+
+        .product-card {
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 60px 20px;
+            transition: all 0.4s ease;
+            background: rgba(255, 255, 255, 0.02);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 150px;
+        }
+
+        .product-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 30px rgba(255, 255, 255, 0.05);
+        }
+
+        .product-card h3 {
+            font-weight: 300;
+            letter-spacing: 0.2rem;
+            text-transform: uppercase;
+            font-size: 1.2rem;
+            margin: 0;
+        }
+
+        /* Sekcja personalizacji */
+        .customization-box {
+            margin-top: 50px;
+            padding-top: 60px;
+            border-top: 1px dashed rgba(255, 255, 255, 0.2);
+        }
+
+        .customization-box h2 {
+            font-weight: 200;
+            letter-spacing: 0.2rem;
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+        }
+
+        .customization-subtitle {
+            font-weight: 300;
+            font-size: 1rem;
+            letter-spacing: 0.1rem;
+            opacity: 0.7;
+            margin-bottom: 40px;
+        }
+
+        .custom-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .custom-list li {
+            font-weight: 300;
+            font-size: 0.9rem;
+            letter-spacing: 0.1rem;
+            padding: 12px 25px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 2px;
+            background: rgba(255, 255, 255, 0.03);
+            transition: 0.3s;
+        }
+
+        .custom-list li:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        @media (max-width: 900px) {
+            .product-grid { grid-template-columns: 1fr; gap: 20px; }
+            .custom-list { flex-direction: column; align-items: center; }
+            .custom-list li { width: 80%; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="top-nav">
+        <a href="index.html">Strona Główna</a> 
+        <span class="nav-separator">|</span>
+        <a href="index.html#kontakt">Kontakt</a>
+        <span class="nav-separator">|</span>
+        <a href="index.html#galeria">Galeria</a>
+    </nav>
+
+    <section class="products-section">
+        <h1>Nasza Biżuteria</h1>
+        <div class="divider"></div>
+        
+        <div class="product-grid">
+            <div class="product-card">
+                <h3>Pierścionek</h3>
+            </div>
+            <div class="product-card">
+                <h3>Naszyjnik</h3>
+            </div>
+            <div class="product-card">
+                <h3>Bransoletka</h3>
+            </div>
+        </div>
+
+        <div class="customization-box">
+            <h2>Twoja historia zaklęta w kruszcu</h2>
+            <p class="customization-subtitle">Co możemy dla Ciebie oprawić?</p>
+            <ul class="custom-list">
+                <li>Pierwszy pukiel włosów dziecka</li>
+                <li>Kawałek koronki z sukni ślubnej</li>
+                <li>Zdjęcie ukochanego pupila</li>
+                <li>Linie papilarne (odcisk palca)</li>
+            </ul>
+        </div>
+    </section>
+
+</body>
+</html>
