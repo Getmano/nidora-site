@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontakt | NIDORA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0; padding: 0; width: 100%; background-color: #000; color: white; font-family: 'Montserrat', sans-serif;
+        }
+
+        /* MENU */
+        .top-nav { position: absolute; top: 40px; width: 100%; text-align: center; z-index: 20; }
+        .top-nav a { color: rgba(255, 255, 255, 0.7); text-decoration: none; font-size: 0.75rem; font-weight: 300; letter-spacing: 0.25rem; text-transform: uppercase; transition: 0.3s; padding: 0 15px; }
+        .top-nav a:hover { color: #fff; }
+        .nav-separator { color: rgba(255, 255, 255, 0.2); font-weight: 200; font-size: 0.8rem; }
+
+        /* SEKCJA KONTAKT */
+        .contact-section { padding: 120px 10% 50px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 50px; max-width: 1200px; margin: 0 auto; }
+        .contact-info, .contact-form { flex: 1; min-width: 300px; }
+        
+        h1 { font-weight: 200; letter-spacing: 0.3rem; font-size: 2.5rem; text-transform: uppercase; margin-bottom: 20px; }
+        .divider { width: 80px; height: 1px; background-color: rgba(255, 255, 255, 0.4); margin-bottom: 40px; }
+        
+        .contact-info p { font-weight: 300; line-height: 1.8; opacity: 0.8; margin-bottom: 30px; }
+        .contact-details p { font-size: 1.1rem; letter-spacing: 0.1rem; margin: 10px 0; font-weight: 200; }
+        .contact-details span { opacity: 0.6; font-size: 0.9rem; display: block; text-transform: uppercase; letter-spacing: 0.15rem; margin-top: 20px; }
+
+        /* FORMULARZ */
+        .contact-form { background: rgba(255, 255, 255, 0.02); padding: 40px; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .input-group { margin-bottom: 25px; }
+        .input-group input, .input-group textarea { width: 100%; background: transparent; border: none; border-bottom: 1px solid rgba(255, 255, 255, 0.3); color: white; padding: 10px 0; font-family: 'Montserrat', sans-serif; font-size: 1rem; transition: 0.3s; outline: none; }
+        .input-group textarea { resize: vertical; min-height: 80px; }
+        .input-group input:focus, .input-group textarea:focus { border-bottom-color: white; }
+        .input-group input::placeholder, .input-group textarea::placeholder { color: rgba(255, 255, 255, 0.4); font-weight: 200; letter-spacing: 0.05rem; }
+        
+        .submit-btn { background: transparent; color: white; border: 1px solid white; padding: 15px 40px; text-transform: uppercase; letter-spacing: 0.2rem; font-family: 'Montserrat', sans-serif; font-weight: 300; cursor: pointer; transition: 0.4s; width: 100%; margin-top: 10px; }
+        .submit-btn:hover { background: white; color: black; }
+
+        @media (max-width: 768px) { .contact-form { padding: 20px; } }
+    </style>
+</head>
+<body>
+
+    <nav class="top-nav">
+        <a href="index.html">Strona Główna</a>
+        <span class="nav-separator">|</span>
+        <a href="produkty.html">Produkty</a>
+        <span class="nav-separator">|</span>
+        <a href="galeria.html">Galeria</a>
+    </nav>
+
+    <section class="contact-section">
+        <div class="contact-info">
+            <h1>Kontakt</h1>
+            <div class="divider"></div>
+            <p>Porozmawiajmy o Twoich wspomnieniach. Jeśli masz pytania dotyczące procesu tworzenia biżuterii, materiałów, które możemy oprawić, lub chcesz zrealizować niestandardowy projekt – napisz do nas.</p>
+            <div class="contact-details">
+                <span>Email</span>
+                <p>pracownia@nidora.pl</p>
+                <span>Telefon</span>
+                <p>+48 123 456 789</p>
+                <span>Social Media</span>
+                <p>@nidora.bizuteria</p>
+            </div>
+        </div>
+
+        <div class="contact-form">
+            <form action="#" method="POST">
+                <div class="input-group">
+                    <input type="text" placeholder="Twoje imię i nazwisko" required>
+                </div>
+                <div class="input-group">
+                    <input type="email" placeholder="Twój adres e-mail" required>
+                </div>
+                <div class="input-group">
+                    <textarea placeholder="Jakie wspomnienie chcesz z nami oprawić?" required></textarea>
+                </div>
+                <button type="submit" class="submit-btn">Wyślij wiadomość</button>
+            </form>
+        </div>
+    </section>
+
+</body>
+</html>
