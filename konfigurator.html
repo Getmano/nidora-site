@@ -9,18 +9,16 @@
             margin: 0; padding: 0; width: 100%; height: 100%;
             background-color: #000; color: white;
             font-family: 'Montserrat', sans-serif;
-            overflow: hidden; /* Blokujemy przewijanie, to aplikacja pełnoekranowa */
+            overflow: hidden;
             display: flex;
         }
 
-        /* LEWA STRONA - KONFIGURATOR 3D */
         .configurator-area {
-            flex: 2; /* Zajmuje 2/3 szerokości */
+            flex: 2;
             position: relative;
             background: radial-gradient(circle at center, #222 0%, #000 100%);
         }
 
-        /* Kontener na podgląd 3D */
         #canvas-container {
             width: 100%;
             height: 100%;
@@ -28,7 +26,6 @@
         }
         #canvas-container:active { cursor: grabbing; }
 
-        /* Przycisk do wgrywania zdjęcia */
         .upload-ui {
             position: absolute;
             bottom: 50px;
@@ -56,12 +53,10 @@
             color: black;
         }
 
-        /* Ukrywamy domyślny, brzydki przycisk wgrywania pliku */
         #photo-input { display: none; }
 
-        /* PRAWA STRONA - LISTA MODELI */
         .sidebar {
-            flex: 1; /* Zajmuje 1/3 szerokości */
+            flex: 1;
             background-color: #0a0a0a;
             border-left: 1px solid rgba(255, 255, 255, 0.1);
             padding: 40px;
@@ -153,110 +148,109 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
 
     <script>
-        // --- 1. USTAWIENIA SCENY 3D ---
         const container = document.getElementById('canvas-container');
         const scene = new THREE.Scene();
         
         const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
-        camera.position.set(0, 15, 30); // Ustawiamy kamerę lekko pod kątem
+        camera.position.set(0, 15, 30);
 
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(container.clientWidth, container.clientHeight);
         renderer.setPixelRatio(window.devicePixelRatio);
         container.appendChild(renderer.domElement);
 
-        // Kontroler pozwalający obracać pierścionek myszką
         const controls = new THREE.OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true; 
         controls.dampingFactor = 0.05;
 
-        // --- 2. OŚWIETLENIE (Efekt Srebra) ---
+        // --- ZMIENIONE OŚWIETLENIE ---
+        // Dodajemy więcej świateł z różnych stron, aby srebro ładnie błyszczało
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
         scene.add(ambientLight);
 
-        const dirLight1 = new THREE.DirectionalLight(0xffffff, 0.8);
+        const dirLight1 = new THREE.DirectionalLight(0xffffff, 1);
         dirLight1.position.set(10, 20, 10);
         scene.add(dirLight1);
 
-        const dirLight2 = new THREE.DirectionalLight(0xddddff, 0.5); // Chłodne światło z drugiej strony
-        dirLight2.position.set(-10, -10, -10);
+        const dirLight2 = new THREE.DirectionalLight(0xffffff, 0.8);
+        dirLight2.position.set(-15, 5, -15);
         scene.add(dirLight2);
+        
+        const dirLight3 = new THREE.DirectionalLight(0xffffff, 0.5);
+        dirLight3.position.set(0, -10, 15);
+        scene.add(dirLight3);
 
-        // --- 3. MATERIAŁY ---
-        // Błyszczące srebro
-        const silverMaterial = new THREE.MeshStandardMaterial({
-            color: 0xeeeeee,
-            metalness: 0.9,
-            roughness: 0.1
+        // --- ZMIENIONE MATERIAŁY ---
+        // MeshPhongMaterial ignoruje brak otoczenia i ładnie "udaje" błyszczący metal
+        const silverMaterial = new THREE.MeshPhongMaterial({
+            color: 0xdddddd,
+            specular: 0xffffff, // Ostre, białe odblaski
+            shininess: 100 // Wysoki połysk
         });
 
-        // Materiał na zdjęcie (na początku czarny/pusty)
-        const photoMaterial = new THREE.MeshStandardMaterial({
+        const photoMaterial = new THREE.MeshPhongMaterial({
             color: 0x111111,
-            metalness: 0.1,
-            roughness: 0.8
+            specular: 0x333333,
+            shininess: 10
         });
 
-        // --- 4. TWORZENIE PIERŚCIONKA (Zastępczy model geometryczny) ---
+        // --- ZMIENIONE TWORZENIE PIERŚCIONKA ---
         const ringGroup = new THREE.Group();
         scene.add(ringGroup);
 
-        // Funkcja budująca nasz zastępczy pierścionek
         function zbudujPierscionek(gruboscObraczki, rozmiarOczka) {
-            // Czyścimy poprzedni model
             while(ringGroup.children.length > 0){ 
                 ringGroup.remove(ringGroup.children[0]); 
             }
 
-            // Obrączka (Torus)
-            const obraczkaGeo = new THREE.TorusGeometry(6, gruboscObraczki, 32, 100);
+            // Zwiększyłem liczbę segmentów z 32 na 64, żeby krawędzie były gładsze
+            const obraczkaGeo = new THREE.TorusGeometry(6, gruboscObraczki, 64, 100);
             const obraczka = new THREE.Mesh(obraczkaGeo, silverMaterial);
-            obraczka.rotation.x = Math.PI / 2; // Kładziemy ją płasko
+            // Obrączka stoi w pionie (usunięto rotację)
             ringGroup.add(obraczka);
 
-            // Podstawa oczka (Srebrna obwódka)
-            const oprawaGeo = new THREE.CylinderGeometry(rozmiarOczka + 0.5, rozmiarOczka + 0.5, 1, 32);
+            // Oprawa na zdjęcie
+            const oprawaGeo = new THREE.CylinderGeometry(rozmiarOczka + 0.5, rozmiarOczka + 0.3, 1, 64);
             const oprawa = new THREE.Mesh(oprawaGeo, silverMaterial);
-            oprawa.position.y = 6; // Podnosimy na górę obrączki
+            // Kładziemy oprawę równiutko na górnej krawędzi obrączki
+            oprawa.position.y = 6 + (gruboscObraczki * 0.5); 
             ringGroup.add(oprawa);
 
-            // Samo zdjęcie (Płaskie koło na samej górze oprawy)
-            const zdjecieGeo = new THREE.CircleGeometry(rozmiarOczka, 32);
+            // Miejsce na zdjęcie
+            const zdjecieGeo = new THREE.CircleGeometry(rozmiarOczka, 64);
             const zdjeciePowierzchnia = new THREE.Mesh(zdjecieGeo, photoMaterial);
             zdjeciePowierzchnia.rotation.x = -Math.PI / 2;
-            zdjeciePowierzchnia.position.y = 6.51; // Minimalnie nad oprawą, by nie mrugało
+            // Kładziemy je tuż nad oprawą
+            zdjeciePowierzchnia.position.y = oprawa.position.y + 0.51; 
             ringGroup.add(zdjeciePowierzchnia);
+            
+            // Lekko pochylamy cały model na start, żeby od razu było widać oczko
+            ringGroup.rotation.x = 0.4;
+            ringGroup.rotation.y = -0.4;
         }
 
-        // Startujemy z klasycznym modelem
         zbudujPierscionek(1.2, 3);
 
-        // --- 5. LOGIKA ZMIANY MODELI Z MENU ---
         window.zmienModel = function(typ) {
-            // Zmiana podświetlenia w menu
             document.querySelectorAll('.model-card').forEach(karta => karta.classList.remove('active'));
             event.currentTarget.classList.add('active');
 
             if (typ === 'klasyczny') {
-                zbudujPierscionek(1.2, 3); // Cieńszy
+                zbudujPierscionek(1.2, 3);
             } else if (typ === 'masywny') {
-                zbudujPierscionek(2.5, 4.5); // Grubszy (Sygnet)
+                zbudujPierscionek(2.5, 4.5);
             }
         };
 
-        // --- 6. LOGIKA WGRYWANIA ZDJĘCIA ---
         document.getElementById('photo-input').addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file) {
-                // Czytamy plik z dysku użytkownika
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    // Tworzymy nową teksturę (obrazek dla 3D) z wgranego pliku
                     const textureLoader = new THREE.TextureLoader();
                     textureLoader.load(e.target.result, function(texture) {
-                        // Nakładamy teksturę na środek pierścionka
                         photoMaterial.map = texture;
-                        photoMaterial.color.setHex(0xffffff); // Resetujemy czarne tło do białego
+                        photoMaterial.color.setHex(0xffffff); 
                         photoMaterial.needsUpdate = true;
                     });
                 };
@@ -264,19 +258,14 @@
             }
         });
 
-        // --- 7. ANIMACJA I RENDEROWANIE SCENY ---
         function animate() {
             requestAnimationFrame(animate);
-            controls.update(); // Wymagane dla płynnego obrotu
-            
-            // Lekki, automatyczny obrót pierścionka, gdy go nie dotykamy
+            controls.update(); 
             ringGroup.rotation.y += 0.002;
-            
             renderer.render(scene, camera);
         }
         animate();
 
-        // Skalowanie przy zmianie rozmiaru okna
         window.addEventListener('resize', () => {
             camera.aspect = container.clientWidth / container.clientHeight;
             camera.updateProjectionMatrix();
