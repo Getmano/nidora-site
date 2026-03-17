@@ -18,7 +18,7 @@
         .cart-icon {
             position: absolute;
             top: 40px;
-            right: 5%; /* Trzyma się prawej krawędzi */
+            right: 5%;
             color: white;
             text-decoration: none;
             display: flex;
@@ -77,7 +77,7 @@
 
         /* SEKCJA PRODUKTY */
         .products-section {
-            padding: 120px 10% 50px; /* Większy padding u góry, żeby menu nie nachodziło na tekst */
+            padding: 120px 10% 50px;
             text-align: center;
         }
 
@@ -113,6 +113,10 @@
             justify-content: center;
             align-items: center;
             min-height: 150px;
+            /* ZMIANY DLA LINKÓW: */
+            text-decoration: none;
+            color: white;
+            cursor: pointer;
         }
 
         .product-card:hover {
@@ -208,12 +212,14 @@
         <div class="divider"></div>
         
         <div class="product-grid">
-            <div class="product-card">
+            <a href="konfigurator.html" class="product-card">
                 <h3>Pierścionek</h3>
-            </div>
+            </a>
+            
             <div class="product-card">
                 <h3>Naszyjnik</h3>
             </div>
+            
             <div class="product-card">
                 <h3>Bransoletka</h3>
             </div>
