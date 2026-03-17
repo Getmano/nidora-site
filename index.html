@@ -1,52 +1,85 @@
+
 <!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nidora - Biżuteria Sentymentalna</title>
+    <title>NIDORA | Biżuteria Sentymentalna</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300&display=swap" rel="stylesheet">
     <style>
-        body {
+        body, html {
             margin: 0;
             padding: 0;
-            background-color: #000000;
-            color: #ffffff;
-            font-family: 'Georgia', serif; /* Elegancka czcionka */
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background-image: url('pyl.jpg');
+            width: 100%;
+            height: 100%;
+            background-color: #000;
+            /* Tło z Twoim pyłem na całą stronę */
+            background-image: url('pyl.jpeg'); 
             background-size: cover;
-            background-position: bottom center;
+            background-position: center bottom;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
         }
+
+        .container {
+            text-align: center;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+        }
+
         h1 {
-            font-size: 3rem;
-            letter-spacing: 0.5rem;
+            font-size: 3.5rem;
+            font-weight: 200; /* Bardzo cienka czcionka */
+            letter-spacing: 0.8rem; /* Rozstrzelone litery dla efektu premium */
+            margin: 0;
             text-transform: uppercase;
-            margin-bottom: 10px;
         }
+
+        .divider {
+            width: 80px; /* Szerokość kreski */
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.4); /* Subtelna, półprzezroczysta biel */
+            margin: 40px auto; /* Odstęp góra/dół */
+        }
+
         p {
-            font-style: italic;
-            opacity: 0.8;
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 0.1rem;
+            margin: 0;
+            opacity: 0.9;
         }
-        .btn {
-            margin-top: 30px;
-            padding: 10px 25px;
-            border: 1px solid #ffffff;
-            color: #ffffff;
+
+        /* Opcjonalny przycisk Instagrama - ukryty, jeśli chcesz tylko napis */
+        .social-link {
+            position: absolute;
+            bottom: 30px;
+            color: rgba(255,255,255,0.5);
             text-decoration: none;
+            font-size: 0.8rem;
+            letter-spacing: 0.2rem;
+            text-transform: uppercase;
+            border-bottom: 1px solid transparent;
             transition: 0.3s;
         }
-        .btn:hover {
-            background: #ffffff;
-            color: #000000;
+        .social-link:hover {
+            border-bottom: 1px solid white;
+            color: white;
         }
     </style>
 </head>
 <body>
-    <h1>NIDORA</h1>
-    <p>Najpiękniejsze wspomnienia zamknięte w srebrze</p>
-    <!-- <a href="https://instagram.com/TWOJ_PROFIL" class="btn">ZAMÓW PAMIĄTKĘ</a> -->
+
+    <div class="container">
+        <h1>NIDORA</h1>
+        <div class="divider"></div>
+        <p>Zamykamy najpiękniejsze wspomnienia w srebrze.</p>
+    </div>
+
+    <!-- <a href="https://www.instagram.com/nidora_bizuteria" class="social-link">Instagram</a> -->
+
 </body>
 </html>
