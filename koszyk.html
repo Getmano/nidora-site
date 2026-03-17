@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Twój Koszyk | NIDORA</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
+    <style>
+        body, html {
+            margin: 0; padding: 0; width: 100%; background-color: #000; color: white; font-family: 'Montserrat', sans-serif;
+        }
+
+        /* MENU NAWIGACYJNE */
+        .top-nav { position: absolute; top: 40px; width: 100%; text-align: center; z-index: 20; }
+        .top-nav a { color: rgba(255, 255, 255, 0.7); text-decoration: none; font-size: 0.75rem; font-weight: 300; letter-spacing: 0.25rem; text-transform: uppercase; transition: 0.3s; padding: 0 15px; }
+        .top-nav a:hover { color: #fff; }
+        .nav-separator { color: rgba(255, 255, 255, 0.2); font-weight: 200; font-size: 0.8rem; }
+
+        /* SEKCJA KOSZYKA */
+        .cart-section { padding: 120px 10% 50px; max-width: 900px; margin: 0 auto; }
+        h1 { font-weight: 200; letter-spacing: 0.3rem; font-size: 2.5rem; text-transform: uppercase; margin-bottom: 20px; text-align: center; }
+        .divider { width: 80px; height: 1px; background-color: rgba(255, 255, 255, 0.4); margin: 0 auto 50px auto; }
+
+        /* LISTA PRODUKTÓW W KOSZYKU */
+        .cart-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 0;
+            gap: 20px;
+        }
+
+        .item-image {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.4);
+            text-align: center;
+        }
+
+        .item-details { flex: 1; }
+        .item-details h3 { margin: 0 0 5px 0; font-weight: 300; letter-spacing: 0.1rem; text-transform: uppercase; font-size: 1.1rem; }
+        .item-details p { margin: 0; font-weight: 200; font-size: 0.85rem; opacity: 0.7; }
+
+        .item-price { font-weight: 300; font-size: 1.2rem; letter-spacing: 0.1rem; }
+        .remove-btn { color: rgba(255, 255, 255, 0.4); text-decoration: none; font-size: 0.8rem; text-transform: uppercase; transition: 0.3s; margin-top: 10px; display: inline-block; cursor: pointer; }
+        .remove-btn:hover { color: #fff; }
+
+        /* PODSUMOWANIE */
+        .cart-summary { margin-top: 50px; text-align: right; background: rgba(255, 255, 255, 0.02); padding: 30px; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .summary-row { display: flex; justify-content: flex-end; gap: 30px; margin-bottom: 15px; font-weight: 200; }
+        .summary-total { font-size: 1.5rem; font-weight: 300; border-top: 1px dashed rgba(255, 255, 255, 0.2); padding-top: 20px; margin-top: 10px; }
+        
+        .checkout-btn { background: white; color: black; border: none; padding: 15px 40px; text-transform: uppercase; letter-spacing: 0.2rem; font-family: 'Montserrat', sans-serif; font-weight: 400; cursor: pointer; transition: 0.4s; margin-top: 30px; display: inline-block; text-decoration: none; }
+        .checkout-btn:hover { background: rgba(255, 255, 255, 0.8); }
+
+        @media (max-width: 600px) {
+            .cart-item { flex-direction: column; text-align: center; }
+            .cart-summary { text-align: center; }
+            .summary-row { justify-content: space-between; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="top-nav">
+        <a href="index.html">Strona Główna</a>
+        <span class="nav-separator">|</span>
+        <a href="produkty.html">Produkty</a>
+        <span class="nav-separator">|</span>
+        <a href="kontakt.html">Kontakt</a>
+    </nav>
+
+    <section class="cart-section">
+        <h1>Twój Koszyk</h1>
+        <div class="divider"></div>
+
+        <div class="cart-item">
+            <div class="item-image">
+                <span>Foto<br>Projektu</span>
+            </div>
+            <div class="item-details">
+                <h3>Srebrny Pierścionek</h3>
+                <p>Personalizacja: Pukiel włosów</p>
+                <a class="remove-btn">Usuń</a>
+            </div>
+            <div class="item-price">450 PLN</div>
+        </div>
+
+        <div class="cart-summary">
+            <div class="summary-row">
+                <span>Wartość zamówienia:</span>
+                <span>450 PLN</span>
+            </div>
+            <div class="summary-row">
+                <span>Dostawa:</span>
+                <span>Darmowa</span>
+            </div>
+            <div class="summary-row summary-total">
+                <span>Razem do zapłaty:</span>
+                <span>450 PLN</span>
+            </div>
+            <a href="#" class="checkout-btn">Przejdź do kasy</a>
+        </div>
+    </section>
+
+</body>
+</html>
