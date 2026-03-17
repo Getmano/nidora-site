@@ -218,6 +218,54 @@
             font-weight: 200;
             opacity: 0.8;
         }
+        /* === NOWA STOPKA === */
+        .site-footer {
+            background-color: #000;
+            padding: 80px 5% 40px;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .footer-logo {
+            font-size: 2rem;
+            letter-spacing: 0.6rem;
+            font-weight: 200;
+            margin-bottom: 30px;
+        }
+
+        .footer-nav {
+            margin-bottom: 40px;
+        }
+
+        /* Używamy stylów z górnego menu */
+        .footer-nav a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 300;
+            letter-spacing: 0.25rem;
+            text-transform: uppercase;
+            transition: 0.3s;
+            padding: 0 10px;
+            display: inline-block;
+            margin: 10px 0; /* Żeby na telefonie nie nachodziły na siebie */
+        }
+
+        .footer-nav a:hover {
+            color: #fff;
+        }
+
+        .footer-bottom {
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.3);
+            letter-spacing: 0.1rem;
+            text-transform: uppercase;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
     </style>
 </head>
 <body>
@@ -349,20 +397,19 @@
         </div>
     </section>
     <footer class="site-footer">
-        <div class="footer-content">
-            <div class="footer-logo">NID<span class="crownd-o">O</span>RA</div>
-            
-            <div class="footer-links">
-                <a href="#">Regulamin</a>
-                <a href="#">Polityka prywatności</a>
-                <a href="#">FAQ</a>
-            </div>
-            
-            <div class="footer-socials">
-                <a href="#">Instagram</a>
-                <a href="#">Facebook</a>
-            </div>
-        </div>
+        <div class="footer-logo">NID<span class="crownd-o">O</span>RA</div>
+        
+        <nav class="footer-nav">
+            <a href="#">Regulamin</a>
+            <span class="nav-separator">|</span>
+            <a href="#">Polityka prywatności</a>
+            <span class="nav-separator">|</span>
+            <a href="#">FAQ</a>
+            <span class="nav-separator">|</span>
+            <a href="#">Instagram</a>
+            <span class="nav-separator">|</span>
+            <a href="#">Facebook</a>
+        </nav>
         
         <div class="footer-bottom">
             &copy; 2026 NIDORA. Zamykamy wspomnienia w srebrze.
