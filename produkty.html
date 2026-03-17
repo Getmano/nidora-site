@@ -14,6 +14,36 @@
             color: white;
             font-family: 'Montserrat', sans-serif;
         }
+        /* IKONA KOSZYKA */
+        .cart-icon {
+            position: absolute;
+            top: 40px;
+            right: 5%; /* Trzyma się prawej krawędzi */
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: 0.3s;
+            z-index: 30;
+        }
+
+        .cart-icon:hover {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .cart-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .cart-count {
+            background: rgba(255, 255, 255, 0.2);
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 50%;
+            font-weight: 300;
+        }
 
         /* MENU NAWIGACYJNE NA GÓRZE */
         .top-nav {
@@ -164,7 +194,12 @@
         <span class="nav-separator">|</span>
         <a href="index.html#galeria">Galeria</a>
     </nav>
-
+    <a href="koszyk.html" class="cart-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"></path>
+        </svg>
+        <span class="cart-count">1</span>
+    </a>
     <section class="products-section">
         <h1>Nasza Biżuteria</h1>
         <div class="divider"></div>
