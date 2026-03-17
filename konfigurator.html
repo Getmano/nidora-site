@@ -2,14 +2,15 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>NIDORA | Konfigurator Pierścionka</title>
+    <title>NIDORA | Konfigurator 3D Precyzyjny</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
     <style>
+        /* === TWOJE STYLIZACJE WIZUALNE (Z CZARNYM TŁEM) === */
         body, html {
             margin: 0; padding: 0; width: 100%; height: 100%;
-            background-color: #000; /* POWRÓT DO CZARNEGO TŁA */
-            color: white; /* BIAŁY TEKST NA CZARNYM TLE */
+            background-color: #000;
+            color: white;
             font-family: 'Montserrat', sans-serif;
             overflow: hidden;
             display: flex;
@@ -19,7 +20,7 @@
         .configurator-area {
             flex: 2;
             position: relative;
-            background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%); /* CIEMNY GRADIENT TŁA */
+            background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
         }
 
         #canvas-container {
@@ -29,10 +30,10 @@
         }
         #canvas-container:active { cursor: grabbing; }
 
-        /* PRAWA STRONA - MENU */
+        /* PRAWA STRONA - MENU (Chłodny, ciemny odcień) */
         .sidebar {
             flex: 1;
-            background-color: #0c0d10; /* CHŁODNY CIEMNY PASEK */
+            background-color: #0c0d10; 
             border-left: 1px solid rgba(255, 255, 255, 0.1);
             padding: 40px;
             display: flex;
@@ -63,7 +64,7 @@
         }
 
         .model-card {
-            background: rgba(255, 255, 255, 0.03); /* LEKKO PRZEZROCZYSTE KARTY */
+            background: rgba(255, 255, 255, 0.03); 
             border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 20px;
             margin-bottom: 15px;
@@ -133,7 +134,7 @@
 
         #photo-input { display: none; }
 
-        /* Edytor zdjęć */
+        /* Edytor zdjęć (Z Twoimi stylami) */
         #cropper-container {
             display: none;
             margin-top: 20px;
@@ -142,7 +143,7 @@
         .img-container {
             width: 100%;
             max-height: 300px;
-            background-color: #222; /* CIEMNE TŁO DLA CROPPERA */
+            background-color: #222; 
             margin-bottom: 15px;
         }
 
@@ -169,14 +170,9 @@
         
         <h2>1. Kształt</h2>
         
-        <div class="model-card active" onclick="zmienModel('klasyczny')">
-            <h3>Model Klasyczny</h3>
-            <p>Okrągłe oczko, chuda obrączka.</p>
-        </div>
-        
-        <div class="model-card" onclick="zmienModel('masywny')">
-            <h3>Sygnet Wspomnień</h3>
-            <p>Masywniejsza forma, grubsza obrączka.</p>
+        <div class="model-card active">
+            <h3>Model Precyzyjny</h3>
+            <p>Śr. 19.8mm | Drut 1.9mm</p>
         </div>
 
         <div class="customization-section">
@@ -209,13 +205,16 @@
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(container.clientWidth, container.clientHeight);
         renderer.setPixelRatio(window.devicePixelRatio);
+        // === POPRAWKA DLA METALU: Włączamy fizykę i tonowanie ===
+        renderer.physicallyCorrectLights = true;
+        renderer.toneMapping = THREE.ACESFilmicToneMapping;
         container.appendChild(renderer.domElement);
 
         const controls = new THREE.OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true; 
         controls.dampingFactor = 0.05;
 
-        // --- OŚWIETLENIE SREBRA ---
+        // --- OŚWIETLENIE PUNKTOWE DLA METALU ---
         const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
         scene.add(ambientLight);
         const dirLight1 = new THREE.DirectionalLight(0xffffff, 1);
@@ -228,48 +227,49 @@
         dirLight3.position.set(0, -10, 15);
         scene.add(dirLight3);
 
-        // --- MAGIA SREBRNEGO POŁYSKU ---
-        // Używamy standardowej mapy odbić, żeby metal wyglądał na metal
-        const textureLoader = new THREE.TextureLoader();
-        const silverEnvMap = textureLoader.load('https://threejs.org/examples/textures/cube/pisa/px.png'); // Używamy chłodnego odbicia (jako envMap)
-
-        // --- MATERIAŁY ---
-        const silverMaterial = new THREE.MeshPhongMaterial({
-            color: 0xdddddd, specular: 0xffffff, shininess: 100,
-            envMap: silverEnvMap, // Dodajemy mapę środowiskową dla odbić
-            combine: THREE.MultiplyOperation,
-            reflectivity: 0.1 // Chłodne, jasne odbicia metalu
+        // --- MATERIAŁY (Z fizycznym połyskiem srebra) ---
+        const silverMaterial = new THREE.MeshStandardMaterial({
+            color: 0xc0c0c0,    // Kolor czystego srebra
+            metalness: 1.0,     // 100% metalu
+            roughness: 0.1,     // Bardzo gładki, błyszczący
         });
 
         const photoMaterial = new THREE.MeshPhongMaterial({
             color: 0xaaaaaa, specular: 0x333333, shininess: 10
         });
 
-        // --- BUDOWA PIERŚCIONKA ---
+        // --- BUDOWA PIERŚCIONKA (Z TWOIMI MILIMETRAMI) ---
         const ringGroup = new THREE.Group();
         scene.add(ringGroup);
 
-        function zbudujPierscionek(gruboscObraczki, rozmiarKorony, rozmiarZdjecia, glebokoscZaglebienia) {
+        function zbudujPierscionek() {
             while(ringGroup.children.length > 0) ringGroup.remove(ringGroup.children[0]); 
 
-            // CHUDA OBRĄCZKA
-            const obraczkaGeo = new THREE.TorusGeometry(6, gruboscObraczki, 64, 100);
-            const obraczka = new THREE.Mesh(obraczkaGeo, silverMaterial);
-            ringGroup.add(obraczka);
+            // TWOJE REALNE WYMIARY (w skali modelu)
+            const gruboscDrutu = 0.95;    // połowa z 1.90 mm
+            const srednicaRing = 9.9;     // połowa z 19.80 mm
+            const srednicaWewMiseczki = 2.05; // połowa z 4.10 mm
+            const glebokoscMiseczki = 1.8; // realne 1.80 mm
 
-            // MNIEJSZA KORONA (ZMNIEJSZONO ROZMIAR Z 3.0 DO 2.0 I ZWIĘKSZONO ŚREDNICĘ ZDJĘCIA Z 2.0 DO 2.5, BY STWORZYĆ ZAGŁĘBIENIE)
-            const oprawaGeo = new THREE.CylinderGeometry(rozmiarKorony, rozmiarKorony * 0.9, glebokoscZaglebienia, 64);
+            // 1. OBRĄCZKA (Tor) - teraz ma 1.9mm grubości
+            const ringGeo = new THREE.TorusGeometry(srednicaRing, gruboscDrutu, 64, 100);
+            const ring = new THREE.Mesh(ringGeo, silverMaterial);
+            ringGroup.add(ring);
+
+            // 2. MISECZKA (Korona) - precyzyjnie 1.8mm głębokości
+            // Dodajemy 0.4mm na ścianki (śr. zewnętrzna wyjdzie ok. 5mm)
+            const oprawaGeo = new THREE.CylinderGeometry(srednicaWewMiseczki + 0.4, srednicaWewMiseczki + 0.3, glebokoscMiseczki, 64);
             const oprawa = new THREE.Mesh(oprawaGeo, silverMaterial);
-            // Kładziemy oprawę równiutko na górnej krawędzi chudej obrączki
-            oprawa.position.y = 6 + (gruboscObraczki * 0.5) - (glebokoscZaglebienia * 0.5);
+            // Kładziemy miseczkę na górze obrączki
+            oprawa.position.y = srednicaRing; 
             ringGroup.add(oprawa);
 
-            // SAMO ZDJĘCIE (OSADZONE NIŻEJ, W ZAGŁĘBIENIU)
-            const zdjecieGeo = new THREE.CircleGeometry(rozmiarZdjecia, 64);
+            // 3. ZDJĘCIE (Wewnątrz miseczki)
+            const zdjecieGeo = new THREE.CircleGeometry(srednicaWewMiseczki, 64);
             const zdjeciePowierzchnia = new THREE.Mesh(zdjecieGeo, photoMaterial);
             zdjeciePowierzchnia.rotation.x = -Math.PI / 2;
-            // Zdjęcie jest teraz fizycznie obniżone wewnątrz srebrnej krawędzi
-            zdjeciePowierzchnia.position.y = oprawa.position.y + glebokoscZaglebienia * 0.35 + 0.1; 
+            // Osadzamy zdjęcie w głąb (na dnie miseczki o głębokości 1.8mm)
+            zdjeciePowierzchnia.position.y = oprawa.position.y + (glebokoscMiseczki / 2) - 0.1; 
             ringGroup.add(zdjeciePowierzchnia);
             
             // Lekko pochylamy cały model na start
@@ -277,17 +277,8 @@
             ringGroup.rotation.y = -0.4;
         }
 
-        // Startujemy z klasycznym, chudym modelem
-        zbudujPierscionek(0.3, 2.5, 2.0, 1); // grubosc, korona, zdjecie, glebokosc
-
-        // --- ZMIANA MODELU ---
-        window.zmienModel = function(typ) {
-            document.querySelectorAll('.model-card').forEach(karta => karta.classList.remove('active'));
-            event.currentTarget.classList.add('active');
-
-            if (typ === 'klasyczny') zbudujPierscionek(0.3, 2.5, 2.0, 1); // Cieniutka obrączka
-            else if (typ === 'masywny') zbudujPierscionek(0.6, 2.5, 2.0, 1.2); // Nieco grubsza obrączka
-        };
+        // Startujemy z chudym modelem o Twoich wymiarach
+        zbudujPierscionek();
 
         // --- KADROWANIE ZDJĘCIA (CROPPER.JS) ---
         let cropper; 
