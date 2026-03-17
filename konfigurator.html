@@ -8,8 +8,8 @@
     <style>
         body, html {
             margin: 0; padding: 0; width: 100%; height: 100%;
-            background-color: #fff;
-            color: black;
+            background-color: #000; /* POWRÓT DO CZARNEGO TŁA */
+            color: white; /* BIAŁY TEKST NA CZARNYM TLE */
             font-family: 'Montserrat', sans-serif;
             overflow: hidden;
             display: flex;
@@ -19,7 +19,7 @@
         .configurator-area {
             flex: 2;
             position: relative;
-            background: radial-gradient(circle at center, #eee 0%, #fff 100%);
+            background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%); /* CIEMNY GRADIENT TŁA */
         }
 
         #canvas-container {
@@ -29,20 +29,20 @@
         }
         #canvas-container:active { cursor: grabbing; }
 
-        /* PRAWA STRONA - MENU (Zmieniono na przewijaną, by zmieścić edytor) */
+        /* PRAWA STRONA - MENU */
         .sidebar {
             flex: 1;
-            background-color: #f9f9f9;
-            border-left: 1px solid rgba(0, 0, 0, 0.1);
+            background-color: #0c0d10; /* CHŁODNY CIEMNY PASEK */
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
             padding: 40px;
             display: flex;
             flex-direction: column;
             box-sizing: border-box;
-            overflow-y: auto; /* Pozwala na przewijanie paska, gdy rozwinie się edytor */
+            overflow-y: auto;
         }
 
         .top-nav a {
-            color: rgba(0, 0, 0, 0.5);
+            color: rgba(255, 255, 255, 0.5);
             text-decoration: none;
             font-size: 0.8rem;
             letter-spacing: 0.2rem;
@@ -51,7 +51,7 @@
             display: inline-block;
             transition: 0.3s;
         }
-        .top-nav a:hover { color: black; }
+        .top-nav a:hover { color: white; }
 
         .sidebar h2 {
             font-weight: 200;
@@ -63,8 +63,8 @@
         }
 
         .model-card {
-            background: #fff;
-            border: 1px solid rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.03); /* LEKKO PRZEZROCZYSTE KARTY */
+            border: 1px solid rgba(255, 255, 255, 0.1);
             padding: 20px;
             margin-bottom: 15px;
             cursor: pointer;
@@ -72,8 +72,8 @@
         }
 
         .model-card:hover, .model-card.active {
-            border-color: rgba(0, 0, 0, 0.8);
-            background: #f0f0f0;
+            border-color: rgba(255, 255, 255, 0.8);
+            background: rgba(255, 255, 255, 0.07);
         }
 
         .model-card h3 {
@@ -81,12 +81,13 @@
             font-weight: 400;
             font-size: 1rem;
             letter-spacing: 0.1rem;
+            color: white;
         }
 
         .model-card p {
             margin: 0;
             font-size: 0.8rem;
-            color: #666;
+            color: rgba(255, 255, 255, 0.6);
             font-weight: 300;
         }
 
@@ -94,13 +95,13 @@
         .customization-section {
             margin-top: 20px;
             padding-top: 30px;
-            border-top: 1px solid rgba(0,0,0,0.1);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .action-btn {
             background: transparent;
-            color: black;
-            border: 1px solid rgba(0, 0, 0, 0.5);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.5);
             padding: 15px 20px;
             font-family: 'Montserrat', sans-serif;
             font-weight: 300;
@@ -115,33 +116,33 @@
         }
 
         .action-btn:hover {
-            background: black;
-            color: white;
+            background: white;
+            color: black;
         }
 
         .action-btn.primary {
-            background: black;
-            color: white;
+            background: white;
+            color: black;
             margin-top: 15px;
             font-weight: 400;
         }
         
         .action-btn.primary:hover {
-            background: #333;
+            background: #eee;
         }
 
         #photo-input { display: none; }
 
         /* Edytor zdjęć */
         #cropper-container {
-            display: none; /* Ukryte do momentu wgrania zdjęcia */
+            display: none;
             margin-top: 20px;
         }
 
         .img-container {
             width: 100%;
             max-height: 300px;
-            background-color: #eee;
+            background-color: #222; /* CIEMNE TŁO DLA CROPPERA */
             margin-bottom: 15px;
         }
 
@@ -149,7 +150,6 @@
             max-width: 100%;
         }
 
-        /* Magia CSS: Wymuszamy okrągły wygląd ramki kadrowania */
         .cropper-view-box,
         .cropper-face {
             border-radius: 50%;
@@ -171,7 +171,7 @@
         
         <div class="model-card active" onclick="zmienModel('klasyczny')">
             <h3>Model Klasyczny</h3>
-            <p>Okrągłe oczko, delikatna obrączka.</p>
+            <p>Okrągłe oczko, chuda obrączka.</p>
         </div>
         
         <div class="model-card" onclick="zmienModel('masywny')">
@@ -186,7 +186,7 @@
             <input type="file" id="photo-input" accept="image/*">
             
             <div id="cropper-container">
-                <p style="font-size: 0.8rem; margin-bottom: 10px; color: #666;">Przesuń i powiększ zdjęcie, aby dopasować je do okrągłego oczka:</p>
+                <p style="font-size: 0.8rem; margin-bottom: 10px; color: rgba(255, 255, 255, 0.6);">Przesuń i powiększ zdjęcie, aby dopasować je do okrągłego oczka:</p>
                 <div class="img-container">
                     <img id="image-to-crop" src="">
                 </div>
@@ -228,12 +228,19 @@
         dirLight3.position.set(0, -10, 15);
         scene.add(dirLight3);
 
+        // --- MAGIA SREBRNEGO POŁYSKU ---
+        // Używamy standardowej mapy odbić, żeby metal wyglądał na metal
+        const textureLoader = new THREE.TextureLoader();
+        const silverEnvMap = textureLoader.load('https://threejs.org/examples/textures/cube/pisa/px.png'); // Używamy chłodnego odbicia (jako envMap)
+
         // --- MATERIAŁY ---
         const silverMaterial = new THREE.MeshPhongMaterial({
-            color: 0xdddddd, specular: 0xffffff, shininess: 100
+            color: 0xdddddd, specular: 0xffffff, shininess: 100,
+            envMap: silverEnvMap, // Dodajemy mapę środowiskową dla odbić
+            combine: THREE.MultiplyOperation,
+            reflectivity: 0.1 // Chłodne, jasne odbicia metalu
         });
 
-        // Materiał zdjęcia (zaczynamy od ładnego szarego tła, by nie straszyło czernią)
         const photoMaterial = new THREE.MeshPhongMaterial({
             color: 0xaaaaaa, specular: 0x333333, shininess: 10
         });
@@ -242,69 +249,71 @@
         const ringGroup = new THREE.Group();
         scene.add(ringGroup);
 
-        function zbudujPierscionek(gruboscObraczki, rozmiarOczka) {
+        function zbudujPierscionek(gruboscObraczki, rozmiarKorony, rozmiarZdjecia, glebokoscZaglebienia) {
             while(ringGroup.children.length > 0) ringGroup.remove(ringGroup.children[0]); 
 
+            // CHUDA OBRĄCZKA
             const obraczkaGeo = new THREE.TorusGeometry(6, gruboscObraczki, 64, 100);
             const obraczka = new THREE.Mesh(obraczkaGeo, silverMaterial);
             ringGroup.add(obraczka);
 
-            const oprawaGeo = new THREE.CylinderGeometry(rozmiarOczka + 0.5, rozmiarOczka + 0.3, 1, 64);
+            // MNIEJSZA KORONA (ZMNIEJSZONO ROZMIAR Z 3.0 DO 2.0 I ZWIĘKSZONO ŚREDNICĘ ZDJĘCIA Z 2.0 DO 2.5, BY STWORZYĆ ZAGŁĘBIENIE)
+            const oprawaGeo = new THREE.CylinderGeometry(rozmiarKorony, rozmiarKorony * 0.9, glebokoscZaglebienia, 64);
             const oprawa = new THREE.Mesh(oprawaGeo, silverMaterial);
-            oprawa.position.y = 6 + (gruboscObraczki * 0.5); 
+            // Kładziemy oprawę równiutko na górnej krawędzi chudej obrączki
+            oprawa.position.y = 6 + (gruboscObraczki * 0.5) - (glebokoscZaglebienia * 0.5);
             ringGroup.add(oprawa);
 
-            const zdjecieGeo = new THREE.CircleGeometry(rozmiarOczka, 64);
+            // SAMO ZDJĘCIE (OSADZONE NIŻEJ, W ZAGŁĘBIENIU)
+            const zdjecieGeo = new THREE.CircleGeometry(rozmiarZdjecia, 64);
             const zdjeciePowierzchnia = new THREE.Mesh(zdjecieGeo, photoMaterial);
             zdjeciePowierzchnia.rotation.x = -Math.PI / 2;
-            zdjeciePowierzchnia.position.y = oprawa.position.y + 0.51; 
+            // Zdjęcie jest teraz fizycznie obniżone wewnątrz srebrnej krawędzi
+            zdjeciePowierzchnia.position.y = oprawa.position.y + glebokoscZaglebienia * 0.35 + 0.1; 
             ringGroup.add(zdjeciePowierzchnia);
             
+            // Lekko pochylamy cały model na start
             ringGroup.rotation.x = 0.4;
             ringGroup.rotation.y = -0.4;
         }
 
-        zbudujPierscionek(1.2, 3);
+        // Startujemy z klasycznym, chudym modelem
+        zbudujPierscionek(0.3, 2.5, 2.0, 1); // grubosc, korona, zdjecie, glebokosc
 
         // --- ZMIANA MODELU ---
         window.zmienModel = function(typ) {
             document.querySelectorAll('.model-card').forEach(karta => karta.classList.remove('active'));
             event.currentTarget.classList.add('active');
 
-            if (typ === 'klasyczny') zbudujPierscionek(1.2, 3);
-            else if (typ === 'masywny') zbudujPierscionek(2.5, 4.5);
+            if (typ === 'klasyczny') zbudujPierscionek(0.3, 2.5, 2.0, 1); // Cieniutka obrączka
+            else if (typ === 'masywny') zbudujPierscionek(0.6, 2.5, 2.0, 1.2); // Nieco grubsza obrączka
         };
 
         // --- KADROWANIE ZDJĘCIA (CROPPER.JS) ---
-        let cropper; // Zmienna przechowująca nasz edytor
+        let cropper; 
         const imageToCrop = document.getElementById('image-to-crop');
         const cropperContainer = document.getElementById('cropper-container');
 
-        // 1. Kiedy klient wybierze plik z dysku:
         document.getElementById('photo-input').addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    // Wrzucamy zdjęcie do ukrytego kontenera
                     imageToCrop.src = e.target.result;
-                    // Odkrywamy sekcję edytora
                     cropperContainer.style.display = 'block';
 
-                    // Jeśli edytor był już wcześniej uruchomiony (np. klient wgrywa drugie zdjęcie), niszczymy stary
                     if (cropper) {
                         cropper.destroy();
                     }
 
-                    // Uruchamiamy narzędzie do kadrowania
                     cropper = new Cropper(imageToCrop, {
-                        aspectRatio: 1, // Wymuszamy idealny kwadrat (który CSS wyświetla jako koło)
-                        viewMode: 1, // Zdjęcie nie może uciec poza ramkę
-                        dragMode: 'move', // Klient przesuwa zdjęcie, a nie rysuje ramkę
-                        guides: false, // Wyłączamy siatkę ułatwiającą (wygląda lepiej bez niej)
+                        aspectRatio: 1,
+                        viewMode: 1,
+                        dragMode: 'move',
+                        guides: false,
                         center: false,
-                        cropBoxMovable: false, // Ramka stoi w miejscu
-                        cropBoxResizable: false, // Klient nie może zmienić kształtu ramki
+                        cropBoxMovable: false,
+                        cropBoxResizable: false,
                         toggleDragModeOnDblclick: false
                     });
                 };
@@ -312,21 +321,18 @@
             }
         });
 
-        // 2. Kiedy klient kliknie "Nałóż na pierścionek":
         document.getElementById('apply-crop').addEventListener('click', function() {
             if (!cropper) return;
 
-            // Edytor wycina zaznaczony fragment i zamienia go na nowy plik
             const croppedCanvas = cropper.getCroppedCanvas({
-                width: 512, // Ustawiamy optymalną jakość dla 3D
+                width: 512, 
                 height: 512
             });
 
-            // Nakładamy wycięte zdjęcie na materiał 3D
             const textureLoader = new THREE.TextureLoader();
             textureLoader.load(croppedCanvas.toDataURL(), function(texture) {
                 photoMaterial.map = texture;
-                photoMaterial.color.setHex(0xffffff); // Aby kolory zdjęcia były naturalne
+                photoMaterial.color.setHex(0xffffff); 
                 photoMaterial.needsUpdate = true;
             });
         });
@@ -335,7 +341,6 @@
         function animate() {
             requestAnimationFrame(animate);
             controls.update(); 
-            // Lekki obrót tylko wtedy, gdy klient niczego nie edytuje
             if(cropperContainer.style.display !== 'block') {
                 ringGroup.rotation.y += 0.002;
             }
