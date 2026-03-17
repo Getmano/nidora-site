@@ -197,6 +197,25 @@
             border-radius: 50%;
             font-weight: 300;
         }
+
+        /* STYLIZACJA LITERKI O Z KORONĄ */
+        .crownd-o {
+            position: relative; /* To jest kluczowe dla pozycjonowania korony */
+            display: inline-block; /* Żeby span zachowywał się jak litera */
+        }
+
+        /* DODANIE KORONY ZA POMOCĄ CSS */
+        .crownd-o::before {
+            content: "\2654"; /* To jest symbol korony w Unicode (♕) */
+            position: absolute;
+            top: -1.2rem; /* Odstęp od góry - dostosuj w razie potrzeby */
+            left: 50%; /* Pozycjonowanie względem środka O */
+            transform: translateX(-50%); /* Precyzyjne wyśrodkowanie korony */
+            font-size: 1.2rem; /* Rozmiar korony - dostosuj */
+            color: white; /* Kolor korony */
+            font-weight: 200; /* Grubość korony */
+            opacity: 0.8; /* Delikatna przezroczystość, by nie dominowała */
+        }
     </style>
 </head>
 <body>
@@ -310,7 +329,7 @@
         <span class="sparkle tiny" style="left:95%; top:61%; --dur:2.3s; --delay:2.5s;"></span>
     </div>
         <div class="hero-content">
-            <h1>NIDORA</h1>
+           <h1>NID<span class="crownd-o">O</span>RA</h1>
             <div class="divider"></div>
             <p>Zamykamy najpiękniejsze wspomnienia w srebrze.</p>
         </div>
