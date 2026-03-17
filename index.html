@@ -205,16 +205,17 @@
         }
 
         /* DODANIE KORONY ZA POMOCĄ CSS */
+       /* POPRAWIONE POZYCJONOWANIE KORONY */
         .crownd-o::before {
-            content: "\2654"; /* To jest symbol korony w Unicode (♕) */
+            content: "\2654"; /* ♕ */
             position: absolute;
-            top: -1.2rem; /* Odstęp od góry - dostosuj w razie potrzeby */
-            left: 50%; /* Pozycjonowanie względem środka O */
-            transform: translateX(-50%); /* Precyzyjne wyśrodkowanie korony */
-            font-size: 1.2rem; /* Rozmiar korony - dostosuj */
-            color: white; /* Kolor korony */
-            font-weight: 200; /* Grubość korony */
-            opacity: 0.8; /* Delikatna przezroczystość, by nie dominowała */
+            top: -0.35em; /* Odstęp relatywny do rozmiaru O (np. 35% wysokości liter) */
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.35em; /* Rozmiar korony relatywny do O */
+            color: white;
+            font-weight: 200;
+            opacity: 0.8;
         }
     </style>
 </head>
