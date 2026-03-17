@@ -20,7 +20,7 @@
         /* MENU NAWIGACYJNE NA GÓRZE */
         .top-nav {
             position: absolute;
-            top: 40px; /* Odstęp od samej góry */
+            top: 40px;
             width: 100%;
             text-align: center;
             z-index: 20;
@@ -42,10 +42,10 @@
         }
 
       .nav-separator {
-            color: rgba(255, 255, 255, 0.5); /* Zwiększamy tylko widoczność (z 0.2 na 0.5) */
-            font-weight: 200; /* Zostaje oryginalne, cieniutkie */
-            font-size: 0.8rem; /* Zostaje oryginalny rozmiar */
-            margin: 0 8px; /* Odrobina przestrzeni po bokach, żeby kreska nie przyklejała się do słów */
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 200;
+            font-size: 0.8rem;
+            margin: 0 8px;
         }
 
         /* Sekcja powitalna */
@@ -76,7 +76,7 @@
         .hero-content {
             text-align: center;
             z-index: 2;
-            margin-top: -5vh; /* Lekkie podbicie napisu do góry */
+            margin-top: -5vh;
         }
 
         h1 {
@@ -145,12 +145,14 @@
         }
 
         .image-side img {
-            max-width: 80%; /* Możesz tu zmienić wielkość (np. 70% lub 400px) */
+            max-width: 80%;
             height: auto;
             -webkit-mask-image: radial-gradient(circle, black 50%, transparent 95%);
             mask-image: radial-gradient(circle, black 50%, transparent 95%);
             filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.05));
-            transition: transform 0.6s ease;
+            /* ZMIANA: Dodano płynne przejście przezroczystości (opacity) */
+            transition: transform 0.6s ease, opacity 0.5s ease-in-out;
+            opacity: 1; 
         }
 
         .image-side img:hover {
@@ -168,12 +170,13 @@
             .hero-content { margin-top: -10vh; }
             .top-nav a { font-size: 0.65rem; padding: 0 8px; }
         }
-        /* IKONA KOSZYKA - NAPRAWA ROZMIARU I KOLORU */
+        
+        /* IKONA KOSZYKA */
         .cart-icon {
             position: absolute;
             top: 40px;
             right: 5%;
-            color: white; /* Zmienia fiolet na biały */
+            color: white;
             text-decoration: none;
             display: flex;
             align-items: center;
@@ -187,7 +190,7 @@
         }
 
         .cart-icon svg {
-            width: 24px;  /* Blokuje rozrost ikony na całą stronę */
+            width: 24px; 
             height: 24px;
         }
 
@@ -201,23 +204,22 @@
 
         /* STYLIZACJA LITERKI O Z KORONĄ */
         .crownd-o {
-            position: relative; /* To jest kluczowe dla pozycjonowania korony */
-            display: inline-block; /* Żeby span zachowywał się jak litera */
+            position: relative;
+            display: inline-block;
         }
 
-        /* DODANIE KORONY ZA POMOCĄ CSS */
-       /* POPRAWIONE POZYCJONOWANIE KORONY */
         .crownd-o::before {
-            content: "\2654"; /* ♕ */
+            content: "\2654"; 
             position: absolute;
-            top: -0.35em; /* Odstęp relatywny do rozmiaru O (np. 35% wysokości liter) */
+            top: -0.35em;
             left: 50%;
             transform: translateX(-50%);
-            font-size: 0.35em; /* Rozmiar korony relatywny do O */
+            font-size: 0.35em;
             color: white;
             font-weight: 200;
             opacity: 0.8;
         }
+        
         /* === NOWA STOPKA === */
         .site-footer {
             background-color: #000;
@@ -238,7 +240,6 @@
             margin-bottom: 40px;
         }
 
-        /* Używamy stylów z górnego menu */
         .footer-nav a {
             color: rgba(255, 255, 255, 0.7);
             text-decoration: none;
@@ -249,7 +250,7 @@
             transition: 0.3s;
             padding: 0 10px;
             display: inline-block;
-            margin: 10px 0; /* Żeby na telefonie nie nachodziły na siebie */
+            margin: 10px 0; 
         }
 
         .footer-nav a:hover {
@@ -287,7 +288,6 @@
 
     <section class="hero">
          <div class="sparkle-layer">
-        <!-- Dense bottom zone (80%-96%) -->
         <span class="sparkle tiny" style="left:2%; top:84%; --dur:1.8s; --delay:0.1s;"></span>
         <span class="sparkle" style="left:4%; top:91%; --dur:2.3s; --delay:0.9s;"></span>
         <span class="sparkle tiny alt" style="left:7%; top:87%; --dur:1.5s; --delay:1.6s;"></span>
@@ -337,7 +337,6 @@
         <span class="sparkle" style="left:95%; top:86%; --dur:2.2s; --delay:2.0s;"></span>
         <span class="sparkle tiny alt" style="left:97%; top:91%; --dur:1.5s; --delay:0.3s;"></span>
 
-        <!-- Mid-lower zone (65%-82%) -->
         <span class="sparkle tiny" style="left:3%; top:72%; --dur:2.0s; --delay:1.2s;"></span>
         <span class="sparkle" style="left:7%; top:78%; --dur:2.6s; --delay:0.4s;"></span>
         <span class="sparkle tiny alt" style="left:11%; top:68%; --dur:1.7s; --delay:2.1s;"></span>
@@ -363,7 +362,6 @@
         <span class="sparkle tiny" style="left:91%; top:74%; --dur:1.4s; --delay:0.6s;"></span>
         <span class="sparkle diamond" style="left:95%; top:70%; --dur:3.2s; --delay:1.6s;"></span>
 
-        <!-- Upper-mid zone (52%-67%) — sparser -->
         <span class="sparkle tiny" style="left:5%; top:60%; --dur:2.5s; --delay:1.0s;"></span>
         <span class="sparkle tiny alt" style="left:12%; top:55%; --dur:2.0s; --delay:2.2s;"></span>
         <span class="sparkle diamond" style="left:20%; top:63%; --dur:3.3s; --delay:0.5s;"></span>
@@ -393,9 +391,10 @@
         </div>
 
         <div class="image-side">
-            <img src="pierscionek.png" alt="Biżuteria Nidora">
+            <img id="zdjecie-pierscionka" src="pierscionek.png" alt="Biżuteria Nidora">
         </div>
     </section>
+    
     <footer class="site-footer">
         <div class="footer-logo">NID<span class="crownd-o">O</span>RA</div>
         
@@ -415,6 +414,33 @@
             &copy; 2026 NIDORA. Zamykamy wspomnienia w srebrze.
         </div>
     </footer>
+
+    <script>
+        const zdjecia = [
+            'pierscionek.png',
+            'pierscionek2.png',
+            'pierscionek3.png'
+        
+        ];
+        
+        const obrazek = document.getElementById('zdjecie-pierscionka');
+        let obecnyIndeks = 0;
+
+        setInterval(() => {
+            // Najpierw ukrywamy obrazek (łagodne wygaszanie)
+            obrazek.style.opacity = 0;
+            
+            // Czekamy ułamek sekundy aż zniknie, podmieniamy źródło i znów pokazujemy
+            setTimeout(() => {
+                obecnyIndeks++;
+                if (obecnyIndeks >= zdjecia.length) {
+                    obecnyIndeks = 0;
+                }
+                obrazek.src = zdjecia[obecnyIndeks];
+                obrazek.style.opacity = 1; // Łagodne pojawianie
+            }, 500); 
+        }, 5000); // Cały proces powtarza się co 5 sekund
+    </script>
 
 </body>
 </html>
