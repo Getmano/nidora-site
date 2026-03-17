@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pl">
 <head>
@@ -18,6 +17,36 @@
             scroll-behavior: smooth;
         }
 
+        /* MENU NAWIGACYJNE NA GÓRZE */
+        .top-nav {
+            position: absolute;
+            top: 40px; /* Odstęp od samej góry */
+            width: 100%;
+            text-align: center;
+            z-index: 20;
+        }
+
+        .top-nav a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.75rem;
+            font-weight: 300;
+            letter-spacing: 0.25rem;
+            text-transform: uppercase;
+            transition: 0.3s;
+            padding: 0 15px;
+        }
+
+        .top-nav a:hover {
+            color: #fff;
+        }
+
+        .nav-separator {
+            color: rgba(255, 255, 255, 0.2);
+            font-weight: 200;
+            font-size: 0.8rem;
+        }
+
         /* Sekcja powitalna */
         .hero {
             height: 100vh;
@@ -32,7 +61,6 @@
             position: relative;
         }
 
-        /* Gradient wygaszający pył do czerni */
         .hero::after {
             content: '';
             position: absolute;
@@ -47,9 +75,9 @@
         .hero-content {
             text-align: center;
             z-index: 2;
+            margin-top: -5vh; /* Lekkie podbicie napisu do góry */
         }
 
-        /* Przywrócony styl nagłówka */
         h1 {
             font-size: 3.5rem;
             font-weight: 200;
@@ -107,7 +135,7 @@
             margin-bottom: 25px;
         }
 
-        /* Efekt wtapiania zdjęcia w tło */
+        /* Zdjęcie pierścionka */
         .image-side {
             flex: 1;
             display: flex;
@@ -116,9 +144,8 @@
         }
 
         .image-side img {
-            max-width: 80%;
+            max-width: 80%; /* Możesz tu zmienić wielkość (np. 70% lub 400px) */
             height: auto;
-            /* Miękkie brzegi zdjęcia */
             -webkit-mask-image: radial-gradient(circle, black 50%, transparent 95%);
             mask-image: radial-gradient(circle, black 50%, transparent 95%);
             filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.05));
@@ -132,23 +159,28 @@
         /* Sparkles */
         .sparkle-layer { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
         .sparkle { position: absolute; width: 2px; height: 2px; border-radius: 50%; background: white; opacity: 0; animation: shimmer var(--dur, 2s) var(--delay, 0s) infinite ease-in-out; box-shadow: 0 0 2px 1px rgba(255, 255, 255, 0.5); }
-        .sparkle.diamond::before, .sparkle.diamond::after { content: ''; position: absolute; background: white; }
-        .sparkle.diamond::before { width: 3px; height: 1px; top: 50%; left: 0; transform: translateY(-50%); }
-        .sparkle.diamond::after { width: 1px; height: 3px; left: 50%; top: 0; transform: translateX(-50%); }
         @keyframes shimmer { 0%, 100% { opacity: 0; transform: scale(0.5); } 50% { opacity: 0.9; transform: scale(1); } }
-        @keyframes shimmerDiamond { 0%, 100% { opacity: 0; transform: scale(0.3) rotate(0deg); } 50% { opacity: 0.85; transform: scale(1.1) rotate(45deg); } }
-        .sparkle.diamond { animation-name: shimmerDiamond; }
 
         @media (max-width: 900px) {
             .about-section { flex-direction: column; text-align: center; padding: 50px 5%; }
             h1 { font-size: 2.5rem; }
+            .hero-content { margin-top: -10vh; }
+            .top-nav a { font-size: 0.65rem; padding: 0 8px; }
         }
     </style>
 </head>
 <body>
 
+    <nav class="top-nav">
+        <a href="#produkty">Produkty</a>
+        <span class="nav-separator">|</span>
+        <a href="#kontakt">Kontakt</a>
+        <span class="nav-separator">|</span>
+        <a href="#galeria">Galeria</a>
+    </nav>
+
     <section class="hero">
-       <div class="sparkle-layer">
+         <div class="sparkle-layer">
         <!-- Dense bottom zone (80%-96%) -->
         <span class="sparkle tiny" style="left:2%; top:84%; --dur:1.8s; --delay:0.1s;"></span>
         <span class="sparkle" style="left:4%; top:91%; --dur:2.3s; --delay:0.9s;"></span>
@@ -247,7 +279,7 @@
         </div>
     </section>
 
-    <section class="about-section">
+    <section id="produkty" class="about-section">
         <div class="text-side">
             <h2>Ręczna robota z duszą</h2>
             <p>W Nidora wierzymy, że najpiękniejsze wspomnienia zasługują na oprawę szlachetniejszą niż tylko pamięć. Każdy nasz projekt to owoc wielogodzinnej, precyzyjnej pracy ludzkich rąk.</p>
