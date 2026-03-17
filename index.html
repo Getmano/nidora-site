@@ -49,12 +49,28 @@
             z-index: 2;
         }
 
+        /* Przywrócony styl nagłówka */
         h1 {
-            font-size: clamp(2.5rem, 8vw, 4rem);
+            font-size: 3.5rem;
             font-weight: 200;
-            letter-spacing: 1rem;
+            letter-spacing: 0.8rem;
             margin: 0;
             text-transform: uppercase;
+        }
+
+        .divider {
+            width: 80px;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.4);
+            margin: 40px auto;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 0.1rem;
+            margin: 0;
+            opacity: 0.9;
         }
 
         /* Sekcja opisowa */
@@ -81,7 +97,6 @@
             font-size: 2rem;
             margin-bottom: 30px;
             text-transform: uppercase;
-            color: #fff;
         }
 
         .text-side p {
@@ -92,6 +107,7 @@
             margin-bottom: 25px;
         }
 
+        /* Efekt wtapiania zdjęcia w tło */
         .image-side {
             flex: 1;
             display: flex;
@@ -102,7 +118,10 @@
         .image-side img {
             max-width: 100%;
             height: auto;
-            filter: drop-shadow(0 0 30px rgba(255, 255, 255, 0.1));
+            /* Miękkie brzegi zdjęcia */
+            -webkit-mask-image: radial-gradient(circle, black 50%, transparent 95%);
+            mask-image: radial-gradient(circle, black 50%, transparent 95%);
+            filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.05));
             transition: transform 0.6s ease;
         }
 
@@ -110,22 +129,19 @@
             transform: scale(1.05);
         }
 
-        /* STYLE DLA SPARKLES */
+        /* Sparkles */
         .sparkle-layer { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
         .sparkle { position: absolute; width: 2px; height: 2px; border-radius: 50%; background: white; opacity: 0; animation: shimmer var(--dur, 2s) var(--delay, 0s) infinite ease-in-out; box-shadow: 0 0 2px 1px rgba(255, 255, 255, 0.5); }
-        .sparkle.big { width: 3px; height: 3px; }
-        .sparkle.tiny { width: 1px; height: 1px; }
         .sparkle.diamond::before, .sparkle.diamond::after { content: ''; position: absolute; background: white; }
         .sparkle.diamond::before { width: 3px; height: 1px; top: 50%; left: 0; transform: translateY(-50%); }
         .sparkle.diamond::after { width: 1px; height: 3px; left: 50%; top: 0; transform: translateX(-50%); }
-        
         @keyframes shimmer { 0%, 100% { opacity: 0; transform: scale(0.5); } 50% { opacity: 0.9; transform: scale(1); } }
         @keyframes shimmerDiamond { 0%, 100% { opacity: 0; transform: scale(0.3) rotate(0deg); } 50% { opacity: 0.85; transform: scale(1.1) rotate(45deg); } }
         .sparkle.diamond { animation-name: shimmerDiamond; }
 
         @media (max-width: 900px) {
             .about-section { flex-direction: column; text-align: center; padding: 50px 5%; }
-            .text-side { max-width: 100%; }
+            h1 { font-size: 2.5rem; }
         }
     </style>
 </head>
@@ -133,14 +149,16 @@
 
     <section class="hero">
         <div class="sparkle-layer">
-            <span class="sparkle diamond" style="left:10%; top:20%; --dur:3s; --delay:1s;"></span>
-            <span class="sparkle big" style="left:30%; top:50%; --dur:2s; --delay:0.5s;"></span>
-            <span class="sparkle tiny" style="left:70%; top:40%; --dur:4s; --delay:2s;"></span>
-            <span class="sparkle diamond" style="left:85%; top:70%; --dur:2.5s; --delay:0.1s;"></span>
-            <span class="sparkle" style="left:50%; top:15%; --dur:3.5s; --delay:1.5s;"></span>
+            <span class="sparkle diamond" style="left:15%; top:25%; --dur:3s; --delay:1s;"></span>
+            <span class="sparkle" style="left:35%; top:60%; --dur:2s; --delay:0.5s;"></span>
+            <span class="sparkle diamond" style="left:75%; top:35%; --dur:4s; --delay:2s;"></span>
+            <span class="sparkle" style="left:85%; top:75%; --dur:2.5s; --delay:0.1s;"></span>
+            <span class="sparkle diamond" style="left:55%; top:20%; --dur:3.5s; --delay:1.5s;"></span>
         </div>
         <div class="hero-content">
             <h1>NIDORA</h1>
+            <div class="divider"></div>
+            <p>Zamykamy najpiękniejsze wspomnienia w srebrze.</p>
         </div>
     </section>
 
