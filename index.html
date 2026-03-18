@@ -376,23 +376,23 @@
         <span class="sparkle tiny alt" style="left:88%; top:53%; --dur:1.9s; --delay:1.3s;"></span>
         <span class="sparkle tiny" style="left:95%; top:61%; --dur:2.3s; --delay:2.5s;"></span>
     </div>
-        <div class="hero-content">
-           <h1>NID<span class="crownd-o">O</span>RA</h1>
-            <div class="divider"></div>
-            <p>Zamykamy najpiękniejsze wspomnienia w srebrze.</p>
-        </div>
+        <div class="hero-content" data-aos="zoom-in">
+    <h1>NID<span class="crownd-o">O</span>RA</h1>
+    <div class="divider"></div>
+    <p>Zamykamy najpiękniejsze wspomnienia w srebrze.</p>
+</div>
     </section>
 
     <section id="produkty" class="about-section">
-        <div class="text-side">
-            <h2>Ręczna robota z duszą</h2>
+        <div class="text-side" data-aos="fade-right">
+    <h2>Ręczna robota z duszą</h2>
             <p>W Nidora wierzymy, że najpiękniejsze wspomnienia zasługują na oprawę szlachetniejszą niż tylko pamięć. Każdy nasz projekt to owoc wielogodzinnej, precyzyjnej pracy ludzkich rąk.</p>
             <p>Z najwyższą czułością zamykamy przesłane przez Ciebie zdjęcia i symbole w biżuterii najwyższej próby. To nie jest zwykły dodatek – to Twój osobisty amulet, który niesie ze sobą historię.</p>
         </div>
 
-        <div class="image-side">
-            <img id="zdjecie-pierscionka" src="pierscionek.png" alt="Biżuteria Nidora">
-        </div>
+       <div class="image-side" data-aos="fade-left">
+    <img id="zdjecie-pierscionka" src="pierscionek.png" alt="Biżuteria Nidora">
+</div>
     </section>
     
     <footer class="site-footer">
@@ -441,6 +441,11 @@
             }, 500); 
         }, 5000); // Cały proces powtarza się co 5 sekund
     </script>
-
+<script>
+  AOS.init({
+    duration: 1200, // Czas trwania animacji (1.2 sekundy)
+    once: true,     // Animacja wykona się tylko raz przy pierwszym przewinięciu
+  });
+</script>
 </body>
 </html>
