@@ -2,7 +2,7 @@
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
-    <title>NIDORA | Konfigurator 3D</title>
+    <title>NIDORA | Konfigurator 3D Precyzyjny</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css" rel="stylesheet">
     <style>
@@ -12,8 +12,7 @@
         .sidebar { flex: 1; background-color: #0c0d10; border-left: 1px solid rgba(255, 255, 255, 0.1); padding: 40px; overflow-y: auto; box-sizing: border-box; }
         .top-nav a { color: rgba(255, 255, 255, 0.5); text-decoration: none; font-size: 0.8rem; letter-spacing: 0.2rem; text-transform: uppercase; margin-bottom: 40px; display: inline-block; }
         h2 { font-weight: 200; letter-spacing: 0.3rem; font-size: 1.5rem; margin-top: 0; margin-bottom: 20px; text-transform: uppercase; }
-        .model-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 20px; margin-bottom: 15px; cursor: pointer; }
-        .model-card.active { border-color: white; background: rgba(255, 255, 255, 0.1); }
+        .model-card { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); padding: 20px; margin-bottom: 15px; }
         .action-btn { background: transparent; color: white; border: 1px solid white; padding: 15px; width: 100%; cursor: pointer; font-family: 'Montserrat'; text-transform: uppercase; letter-spacing: 0.1rem; margin-top: 10px; transition: 0.3s; }
         .action-btn:hover { background: white; color: black; }
         .action-btn.primary { background: white; color: black; font-weight: 400; }
@@ -31,7 +30,7 @@
     <div class="sidebar">
         <div class="top-nav"><a href="produkty.html">← Wróć do produktów</a></div>
         <h2>1. Kształt</h2>
-        <div class="model-card active">
+        <div class="model-card">
             <h3>Model Precyzyjny</h3>
             <p>Śr. 19.8mm | Drut 1.9mm</p>
         </div>
@@ -61,26 +60,34 @@
         const renderer = new THREE.WebGLRenderer({ antialias: true });
         renderer.setSize(container.clientWidth, container.clientHeight);
         renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.toneMapping = THREE.ACESFilmicToneMapping;
         renderer.outputEncoding = THREE.sRGBEncoding;
         container.appendChild(renderer.domElement);
 
         const controls = new THREE.OrbitControls(camera, renderer.domElement);
         controls.enableDamping = true;
 
-        // --- ROZWIĄZANIE PROBLEMU CZERNI: GENERATOR OTOCZENIA ---
+        // --- FIX DLA SREBRA: GENERUJEMY JASNE ŚRODOWISKO ---
+        const genScene = new THREE.Scene();
+        genScene.background = new THREE.Color(0xffffff); // Białe otoczenie do odbić
         const pmremGenerator = new THREE.PMREMGenerator(renderer);
-        scene.environment = pmremGenerator.fromScene(new THREE.Scene()).texture;
+        pmremGenerator.compileEquirectangularShader();
+        const envRT = pmremGenerator.fromScene(genScene);
+        scene.environment = envRT.texture;
 
-        // ŚWIATŁA
-        const light1 = new THREE.PointLight(0xffffff, 2); light1.position.set(10, 20, 10); scene.add(light1);
-        const light2 = new THREE.PointLight(0xffffff, 1.5); light2.position.set(-10, 5, 5); scene.add(light2);
-        scene.add(new THREE.AmbientLight(0xffffff, 0.5));
+        // ŚWIATŁA (dodatkowe wsparcie)
+        const light = new THREE.DirectionalLight(0xffffff, 1.5);
+        light.position.set(5, 10, 7.5);
+        scene.add(light);
+        scene.add(new THREE.AmbientLight(0xffffff, 0.4));
 
         // MATERIAŁY
         const silverMaterial = new THREE.MeshStandardMaterial({
-            color: 0xffffff, metalness: 1, roughness: 0.05
+            color: 0xffffff, 
+            metalness: 1, 
+            roughness: 0.05 // Gładkie jak lustro
         });
+
+        // Ważne: photoMaterial musi być MeshStandardMaterial dla lepszej współpracy z teksturami
         const photoMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
 
         const ringGroup = new THREE.Group();
@@ -103,21 +110,21 @@
             ringGroup.add(oprawa);
 
             const zdjecieGeo = new THREE.CircleGeometry(srednicaWewMiseczki, 64);
-            const zdjecie = new THREE.Mesh(zdjecieGeo, photoMaterial);
-            zdjecie.rotation.x = -Math.PI / 2;
-            zdjecie.position.y = oprawa.position.y + (glebokoscMiseczki / 2) - 0.1;
-            ringGroup.add(zdjecie);
+            const zdjecieMesh = new THREE.Mesh(zdjecieGeo, photoMaterial);
+            zdjecieMesh.rotation.x = -Math.PI / 2;
+            zdjecieMesh.position.y = oprawa.position.y + (glebokoscMiseczki / 2) - 0.1;
+            ringGroup.add(zdjecieMesh);
         }
 
         zbudujPierscionek();
 
-        // --- OBSŁUGA KADROWANIA I PRZYCISKU ---
+        // --- OBSŁUGA KROPOWANIA ---
         let cropper;
         const input = document.getElementById('photo-input');
         const img = document.getElementById('image-to-crop');
         const cropContainer = document.getElementById('cropper-container');
 
-        input.addEventListener('change', (e) => {
+        input.onchange = (e) => {
             const file = e.target.files[0];
             if(file) {
                 const reader = new FileReader();
@@ -125,21 +132,44 @@
                     img.src = event.target.result;
                     cropContainer.style.display = 'block';
                     if(cropper) cropper.destroy();
-                    cropper = new Cropper(img, { aspectRatio: 1, viewMode: 1, guides: false, cropBoxMovable: false, cropBoxResizable: false });
+                    cropper = new Cropper(img, {
+                        aspectRatio: 1,
+                        viewMode: 1,
+                        dragMode: 'move',
+                        autoCropArea: 1,
+                        cropBoxMovable: false,
+                        cropBoxResizable: false,
+                        ready() { console.log("Cropper gotowy"); }
+                    });
                 };
                 reader.readAsDataURL(file);
             }
-        });
+        };
 
-        // NAPRAWIONY PRZYCISK
-        document.getElementById('apply-crop').addEventListener('click', () => {
-            if(!cropper) return;
+        // --- FIX DLA PRZYCISKU ---
+        document.getElementById('apply-crop').onclick = function() {
+            if(!cropper) {
+                alert("Najpierw wybierz zdjęcie!");
+                return;
+            }
+            
             const canvas = cropper.getCroppedCanvas({ width: 512, height: 512 });
-            const texture = new THREE.CanvasTexture(canvas);
-            photoMaterial.map = texture;
-            photoMaterial.needsUpdate = true;
-            console.log("Zdjęcie nałożone!"); 
-        });
+            const dataUrl = canvas.toDataURL();
+            
+            const loader = new THREE.TextureLoader();
+            loader.load(dataUrl, function(texture) {
+                // Konfiguracja tekstury
+                texture.encoding = THREE.sRGBEncoding;
+                texture.flipY = false; // Czasami Three.js odwraca teksturę
+                
+                photoMaterial.map = texture;
+                photoMaterial.needsUpdate = true;
+                
+                console.log("Tekstura została zaktualizowana!");
+                // Opcjonalnie: ukryj kontener po nałożeniu
+                // cropContainer.style.display = 'none';
+            });
+        };
 
         function animate() {
             requestAnimationFrame(animate);
@@ -149,11 +179,11 @@
         }
         animate();
 
-        window.addEventListener('resize', () => {
+        window.onresize = () => {
             camera.aspect = container.clientWidth / container.clientHeight;
             camera.updateProjectionMatrix();
             renderer.setSize(container.clientWidth, container.clientHeight);
-        });
+        };
     </script>
 </body>
 </html>
