@@ -8,31 +8,6 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@200;300&display=swap" rel="stylesheet">
     <style>
-
-        /* Ukrywamy domyślny kursor na całej stronie */
-* { cursor: none !important; }
-
-.cursor {
-    width: 8px;
-    height: 8px;
-    background-color: white;
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9999;
-    transition: transform 0.1s;
-}
-
-.cursor-follower {
-    width: 30px;
-    height: 30px;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-radius: 50%;
-    position: fixed;
-    pointer-events: none;
-    z-index: 9998;
-    transition: transform 0.15s ease-out;
-}
         body, html {
             margin: 0;
             padding: 0;
@@ -76,20 +51,18 @@
         }
 
         /* Sekcja powitalna */
-       .hero {
-    height: 100vh;
-    width: 100%;
-    background-image: url('pyl.jpeg'); 
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    /* TO AKTYWUJE PARALLAX */
-    background-attachment: fixed; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-}
+        .hero {
+            height: 100vh;
+            width: 100%;
+            background-image: url('pyl.jpeg'); 
+            background-size: cover;
+            background-position: center bottom;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
 
         .hero::after {
             content: '';
@@ -299,8 +272,6 @@
     </style>
 </head>
 <body>
-    <div class="cursor"></div>
-<div class="cursor-follower"></div>
 
   <nav class="top-nav">
         <a href="produkty.html">Produkty</a>
@@ -477,34 +448,6 @@
     duration: 1200, // Czas trwania animacji (1.2 sekundy)
     once: true,     // Animacja wykona się tylko raz przy pierwszym przewinięciu
   });
-</script>
-    <script>
-    const cursor = document.querySelector('.cursor');
-    const follower = document.querySelector('.cursor-follower');
-
-    document.addEventListener('mousemove', (e) => {
-        // Ustawiamy kropkę i okrąg w miejscu myszki
-        cursor.style.left = e.clientX + 'px';
-        cursor.style.top = e.clientY + 'px';
-        
-        // Okrąg porusza się z lekkim opóźnieniem (efekt gumy)
-        setTimeout(() => {
-            follower.style.left = e.clientX - 11 + 'px';
-            follower.style.top = e.clientY - 11 + 'px';
-        }, 50);
-    });
-
-    // Efekt powiększenia przy najechaniu na linki
-    document.querySelectorAll('a, .product-card, .menu-toggle').forEach(link => {
-        link.addEventListener('mouseenter', () => {
-            follower.style.transform = 'scale(2)';
-            follower.style.backgroundColor = 'rgba(255,255,255,0.1)';
-        });
-        link.addEventListener('mouseleave', () => {
-            follower.style.transform = 'scale(1)';
-            follower.style.backgroundColor = 'transparent';
-        });
-    });
 </script>
 </body>
 </html>
